@@ -11,11 +11,19 @@ export const Button = styled.button`
 export const SubmitButton = styled(Button)`
   color: #fff;
   background-color: transparent;
-  border-top: 1px solid #fff;
+
+  /* border-top: 1px solid #fff;
   border-bottom: 1px solid #fff;
   border-left: none;
-  border-right: none;
+  border-right: none; */
+
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+  border-top: none;
+  border-bottom: none;
+
   z-index: 1;
+  margin-bottom: ${(props) => props.mb};
 
   &::before {
     content: "";
@@ -29,7 +37,7 @@ export const SubmitButton = styled(Button)`
   }
 
   &:hover::before {
-    background-color: #1a4168;
+    background-color: #287bff;
     top: 0;
     right: 0;
     bottom: 0;
@@ -60,6 +68,11 @@ export const SelectButton = styled(Button)`
     z-index: -1;
     border: 1px solid #1b456a;
     transform: scale(-1, 1) skew(22deg);
-    background-color: ${(props) => (props.show ? "#1B456A" : "transparent")};
+    background-color: ${(props) => (props.full ? "#1B456A" : "transparent")};
+    transition: 0.3s;
+  }
+
+  &:hover::before {
+    background-color: #1b456a;
   }
 `;

@@ -1,11 +1,11 @@
-import { Input } from "./styles/Input.styled";
-import { Button } from "./styles/Button.styled";
-import { Group } from "./styles/Group.styled";
-import { HomeSection } from "./styles/HomeSection.styled";
-import { ShortLink } from "./ShortLink";
-import { Card } from "./Card";
+import { Input } from "../components/styles/Input.styled";
+import { Button } from "../components/styles/Button.styled";
+import { Group } from "../components/styles/Group.styled";
+import { HomeSection } from "../components/styles/HomeSection.styled";
+import { ShortLink } from "../components/ShortLink";
+import { Card } from "../components/Card";
 
-export const Home = () => {
+export const Admin = () => {
   return (
     <HomeSection>
       <Button>Create Short Link</Button>

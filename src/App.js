@@ -1,16 +1,14 @@
-import { Background } from "./components/styles/Background.styled";
-import { Container } from "./components/styles/Container.styled";
-import { Form } from "./components/Form";
-import { Home } from "./components/Home";
+import "./assets/global.css";
+import { Routes, Route } from "react-router-dom";
+import { Home } from "./pages/Home";
 
 function App() {
   return (
-    <Background>
-      <Container>
-        <Form />
-        <Home />
-      </Container>
-    </Background>
+    <main className="global-background">
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </main>
   );
 }
 

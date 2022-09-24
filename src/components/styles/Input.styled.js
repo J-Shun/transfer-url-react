@@ -9,4 +9,5 @@ export const Input = styled.input`
   border: none;
   border-bottom: 2px solid #fff;
   outline: none;
+  margin-bottom: ${(props) => props.mb};
 `;
