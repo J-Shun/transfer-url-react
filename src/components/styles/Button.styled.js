@@ -3,25 +3,20 @@ import styled from "styled-components";
 export const Button = styled.button`
   position: relative;
   padding: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.25rem;
   transition: all 0.3s;
   cursor: pointer;
+  margin-top: ${(props) => props.mt};
 `;
 
 export const SubmitButton = styled(Button)`
   color: #fff;
   background-color: transparent;
-
-  /* border-top: 1px solid #fff;
-  border-bottom: 1px solid #fff;
-  border-left: none;
-  border-right: none; */
-
+  padding: 1rem 0.5rem;
   border-left: 1px solid #fff;
   border-right: 1px solid #fff;
   border-top: none;
   border-bottom: none;
-
   z-index: 1;
   margin-bottom: ${(props) => props.mb};
 
@@ -37,11 +32,11 @@ export const SubmitButton = styled(Button)`
   }
 
   &:hover::before {
-    background-color: #287bff;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    background-color: #287bff;
   }
 `;
 
@@ -51,8 +46,18 @@ export const CancelButton = styled(SubmitButton)`
   }
 `;
 
+export const CreateButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  border: 1px solid #fcee0a;
+  color: #fcee0a;
+  margin-top: 3rem;
+`;
+
 export const SelectButton = styled(Button)`
-  width: 40%;
+  width: 45%;
   color: #fff;
   background-color: transparent;
   border: none;
@@ -66,13 +71,13 @@ export const SelectButton = styled(Button)`
     bottom: 0;
     left: 0;
     z-index: -1;
-    border: 1px solid #1b456a;
+    border: 2px solid #287bff;
     transform: scale(-1, 1) skew(22deg);
-    background-color: ${(props) => (props.full ? "#1B456A" : "transparent")};
+    background-color: ${(props) => (props.full ? "#287bff" : "transparent")};
     transition: 0.3s;
   }
 
   &:hover::before {
-    background-color: #1b456a;
+    background-color: #287bff;
   }
 `;

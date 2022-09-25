@@ -14,10 +14,11 @@ export const Home = () => {
     <Form>
       <Title>URL Transfer</Title>
 
-      <Group center mb="2rem">
+      <Group justify="center" mb="2rem">
         <SelectButton
           full={loginForm}
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             setCategory("login");
             setLoginForm(true);
           }}
@@ -26,7 +27,8 @@ export const Home = () => {
         </SelectButton>
         <SelectButton
           full={!loginForm}
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             setCategory("register");
             setLoginForm(false);
           }}

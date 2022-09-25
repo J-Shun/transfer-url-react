@@ -7,6 +7,10 @@ export const Container = styled.div`
   margin-right: auto;
 
   @media screen and (min-width: 576px) {
-    max-width: 576px;
+    max-width: 540px;
+  }
+
+  @media screen and (min-width: 992px) {
+    max-width: 960px;
   }
 `;

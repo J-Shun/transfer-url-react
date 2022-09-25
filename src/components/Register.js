@@ -32,6 +32,10 @@ export const Register = () => {
     }
   };
 
+  const submitRegister = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <>
       <GroupCol mb="1rem">
@@ -78,7 +82,7 @@ export const Register = () => {
         />
         <Warn>Confirm password incorrect</Warn>
       </GroupCol>
-      <SubmitButton>SUBMIT</SubmitButton>
+      <SubmitButton onClick={submitRegister}>SUBMIT</SubmitButton>
     </>
   );
 };

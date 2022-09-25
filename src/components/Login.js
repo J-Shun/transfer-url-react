@@ -24,6 +24,10 @@ export const Login = () => {
     }
   };
 
+  const submitLogin = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <>
       <GroupCol mb="1rem">
@@ -48,7 +52,9 @@ export const Login = () => {
         />
         <Warn password={login.password}>Please enter password </Warn>
       </GroupCol>
-      <SubmitButton mb="2.5rem">SUBMIT</SubmitButton>
+      <SubmitButton mb="2.5rem" onClick={submitLogin}>
+        SUBMIT
+      </SubmitButton>
       <Help>FORGET PASSWORD</Help>
     </>
   );

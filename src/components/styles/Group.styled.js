@@ -2,7 +2,10 @@ import styled from "styled-components";
 
 export const Group = styled.div`
   display: flex;
-  justify-content: ${(props) => props.center && "center"};
+  position: relative;
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.items};
+  flex-wrap: wrap;
   gap: ${(props) => props.gap};
   margin-bottom: ${(props) => props.mb};
 `;

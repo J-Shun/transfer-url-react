@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Input = styled.input`
   width: 100%;
-  font-size: 1rem;
+  font-size: 1.25rem;
   padding: 0.5rem 1rem;
   color: #fff;
   background-color: transparent;

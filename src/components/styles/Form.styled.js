@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
-export const Form = styled.div`
+export const Form = styled.form`
   position: relative;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  width: 100%;
   padding: 0 3rem;
   margin-left: auto;
   margin-right: auto;

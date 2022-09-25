@@ -1,24 +1,39 @@
 import styled from "styled-components";
 
 export const ShortLinkSection = styled.div`
-  border: 2px solid #fff;
-  padding: 0 0.5rem;
-  margin-top: 5rem;
-  h2 {
-    color: #dae541;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.9;
+  transition: 0.5s;
+  transform: ${(props) =>
+    props.shortLink ? "translateX(0)" : "translateX(-100%)"};
+
+  .shortLink-card {
+    border: 2px solid #fff;
+    padding: 0 1rem;
+    margin-top: 3rem;
+    color: #fff;
+  }
+
+  .shortLink-title {
     font-size: 2rem;
     font-style: italic;
     text-align: center;
-    transform: translateY(-50%);
-    background-color: #162c39;
+    color: #fcee0a;
+    background-color: #000;
     padding: 0.25rem;
+    transform: translateY(-50%);
   }
 
-  h3 {
-    color: #fff;
-  }
-
-  p {
-    color: #fff;
+  .shortLink-subtitle {
+    color: #fcee0a;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
   }
 `;

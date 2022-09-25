@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Title = styled.h1`
   font-size: 3rem;
   text-align: center;
-  color: #dae541;
+  color: #fcee0a;
   padding: 2rem 0;
   font-style: italic;
 `;
@@ -17,6 +17,7 @@ export const Warn = styled.span`
 
 export const Help = styled.span`
   color: #fff;
+  font-size: 1.25rem;
   align-self: center;
   text-decoration: underline;
   cursor: pointer;
