@@ -66,13 +66,14 @@ export const Header = () => {
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
   };
 
   return (
     <>
       <HeaderSection showNav={showNav}>
         <div className="header-bar">
-          <Link to="/user/">
+          <Link to="/user">
             <HeaderTitle
               onClick={() => {
                 setShowNav(false);
@@ -86,6 +87,11 @@ export const Header = () => {
 
         <nav className="header-nav">
           <ul>
+            <li onClick={toggleNav}>
+              <Link to="/user" className="header-nav-link">
+                Data Management
+              </Link>
+            </li>
             <li onClick={toggleNav}>
               <Link to="/user/profile" className="header-nav-link">
                 Profile

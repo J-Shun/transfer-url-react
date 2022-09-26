@@ -2,19 +2,17 @@ import styled from "styled-components";
 
 export const Card = styled.div`
   position: relative;
-  padding: 1rem 1rem;
+  max-width: ${(props) => props.maxWidth};
   color: #fff;
+  border: 2px solid #fff;
+  padding: ${(props) => props.py || "1rem"} ${(props) => props.px || "1rem"};
   transition: ease-in-out 0.3s;
-  border: 1px solid #fff;
+  margin-top: ${(props) => props.mt};
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 1.5rem;
 
   &:hover {
     box-shadow: 4px 4px 0px #fff;
-  }
-
-  h4 {
-    font-size: 1.75rem;
-    margin-bottom: 0.5rem;
-    color: #fcee0a;
   }
 `;

@@ -11,8 +11,31 @@ export const HomeTitle = styled.h1`
 export const HeaderTitle = styled.h1`
   color: #fcee0a;
   font-style: italic;
+  font-weight: bold;
   font-size: 2rem;
   cursor: pointer;
+`;
+
+export const CardTitle = styled.h2`
+  color: #fcee0a;
+  font-size: 2.5rem;
+  font-style: italic;
+  text-align: center;
+  background-color: ${(props) => props.bgColor};
+  padding: 0.25rem;
+  margin-bottom: ${(props) => props.mb};
+  transform: ${(props) => props.translateY};
+`;
+
+export const CardSubTitle = styled.h3`
+  color: #fcee0a;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+`;
+
+export const CardText = styled.p`
+  color: #fff;
+  font-size: 1.5rem;
 `;
 
 export const Warn = styled.span`

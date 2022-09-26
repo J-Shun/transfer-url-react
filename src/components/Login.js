@@ -3,6 +3,7 @@ import { Input } from "../shared/Input";
 import { Warn, Help } from "../shared/Text";
 import { SubmitButton } from "../shared/Button";
 import { useState } from "react";
+import { userLogin } from "../api/api";
 
 export const Login = ({ setCategory, setLoginForm }) => {
   const [login, setLogin] = useState({
@@ -24,9 +25,19 @@ export const Login = ({ setCategory, setLoginForm }) => {
     }
   };
 
-  const submitLogin = (e) => {
+  const submitLogin = async (e) => {
     e.preventDefault();
-    console.log(login);
+    const result = await userLogin(login);
+    console.log(result);
+    if (result.token) {
+      localStorage.setItem("token", result.token);
+      localStorage.setItem("user", result.name);
+      alert("success");
+    } else if (result.message === "會員不存在") {
+      alert("Please enter correct account");
+    } else if (result.message === "密碼錯誤") {
+      alert("Please enter correct password");
+    }
   };
 
   return (

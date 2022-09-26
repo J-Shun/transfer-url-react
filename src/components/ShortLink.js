@@ -3,6 +3,8 @@ import { Input } from "../shared/Input";
 import { SubmitButton, CancelButton } from "../shared/Button";
 import { Group, GroupCol } from "../shared/Group";
 import { Container } from "../shared/Container";
+import { CardTitle, CardSubTitle } from "../shared/Text";
+import { Card } from "../shared/Card";
 import { MdContentPaste } from "react-icons/md";
 
 import styled from "styled-components";
@@ -20,32 +22,6 @@ const ShortLinkSection = styled.div`
   transition: 0.5s;
   transform: ${(props) =>
     props.shortLink ? "translateX(0)" : "translateX(-100%)"};
-
-  .shortLink-card {
-    max-width: 500px;
-    border: 2px solid #fff;
-    padding: 0 1rem;
-    margin-top: 3rem;
-    margin-left: auto;
-    margin-right: auto;
-    color: #fff;
-  }
-
-  .shortLink-title {
-    font-size: 2rem;
-    font-style: italic;
-    text-align: center;
-    color: #fcee0a;
-    background-color: #000;
-    padding: 0.25rem;
-    transform: translateY(-50%);
-  }
-
-  .shortLink-subtitle {
-    color: #fcee0a;
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-  }
 `;
 
 export const ShortLink = ({ setShortLink, shortLink }) => {
@@ -59,10 +35,12 @@ export const ShortLink = ({ setShortLink, shortLink }) => {
   return (
     <ShortLinkSection shortLink={shortLink}>
       <Container>
-        <div className="shortLink-card">
-          <h2 className="shortLink-title">CREATE NEW URL</h2>
+        <Card maxWidth="500px" mt="4rem" py="0">
+          <CardTitle bgColor="#000" translateY="translateY(-50%)">
+            CREATE NEW URL
+          </CardTitle>
           <GroupCol mb="2rem">
-            <h3 className="shortLink-subtitle">[REQUIRED]</h3>
+            <CardSubTitle>[REQUIRED]</CardSubTitle>
             <Group items="center">
               <Input
                 type="text"
@@ -78,6 +56,7 @@ export const ShortLink = ({ setShortLink, shortLink }) => {
                   width: "22px",
                   height: "22px",
                   cursor: "pointer",
+                  color: "#fff",
                 }}
                 onClick={paste}
               />
@@ -85,7 +64,7 @@ export const ShortLink = ({ setShortLink, shortLink }) => {
           </GroupCol>
 
           <GroupCol mb="2rem">
-            <h3 className="shortLink-subtitle">[OPTIONAL]</h3>
+            <CardSubTitle>[OPTIONAL]</CardSubTitle>
             <Input
               type="text"
               placeholder="TAG: #example #example2"
@@ -95,7 +74,7 @@ export const ShortLink = ({ setShortLink, shortLink }) => {
           </GroupCol>
 
           <GroupCol mb="2rem">
-            <h3 className="shortLink-subtitle">[CUSTOMIZE]</h3>
+            <CardSubTitle>[CUSTOMIZE]</CardSubTitle>
             <Input type="text" placeholder="OG" mb="1rem"></Input>
             <Input type="text" placeholder="META" mb="1rem"></Input>
             <Input type="text" placeholder="IMAGE" mb="1rem"></Input>
@@ -111,7 +90,7 @@ export const ShortLink = ({ setShortLink, shortLink }) => {
               CANCEL
             </CancelButton>
           </Group>
-        </div>
+        </Card>
       </Container>
     </ShortLinkSection>
   );

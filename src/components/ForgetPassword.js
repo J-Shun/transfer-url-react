@@ -2,56 +2,91 @@ import { GroupCol } from "../shared/Group";
 import { Input } from "../shared/Input";
 import { Warn } from "../shared/Text";
 import { SubmitButton } from "../shared/Button";
+import { Select, Option } from "../shared/Input";
 import { useState } from "react";
+import { userResetPassword } from "../api/api";
 
-export const ForgetPassword = () => {
-  const [newPassword, setNewPassword] = useState({
-    newPassword: "",
-    confirmNewPassword: "",
+export const ForgetPassword = ({ setCategory, setLoginForm }) => {
+  const [resetData, setResetData] = useState({
+    email: "",
+    safetyQuestion: "",
+    safetyAnswer: "",
+    password: "",
+    confirmPassword: "",
   });
 
-  const handleNewPassword = (e) => {
+  const handleResetData = (e) => {
     const { name, value } = e.target;
-    switch (name) {
-      case "newPassword":
-        setNewPassword({ ...newPassword, [name]: value });
-        break;
-      case "confirmNewPassword":
-        setNewPassword({ ...newPassword, [name]: value });
-        break;
-      default:
-        return;
-    }
+    setResetData({ ...resetData, [name]: value });
   };
 
-  const submitNewPassword = (e) => {
+  const resetPassword = async (e) => {
     e.preventDefault();
-    console.log(newPassword);
+    console.log(resetData);
+    const result = await userResetPassword(resetData);
+    console.log(result);
+    if (result.status === "success") {
+      setCategory("login");
+      setLoginForm({ login: true, register: false });
+    }
   };
 
   return (
     <>
       <GroupCol mb="1rem">
         <Input
-          type="password"
-          placeholder="NEW PASSWORD"
-          name="newPassword"
+          type="text"
+          placeholder="EMAIL"
+          name="email"
           mb="0.5rem"
-          onChange={handleNewPassword}
+          value={resetData.email}
+          onChange={handleResetData}
         />
-        <Warn>Please enter new password </Warn>
+        <Warn>Please enter a valid email </Warn>
+      </GroupCol>
+      <GroupCol mb="1rem">
+        <Select name="safetyQuestion" mb="1rem" onChange={handleResetData}>
+          <Option value="">Select Safety Question</Option>
+          <Option value="Q1_FIRST_PET_NAME">Q : Name of First Pet ?</Option>
+          <Option value="Q2_PARENTS_CITY">Q : Parents' Living City ?</Option>
+        </Select>
+      </GroupCol>
+      <GroupCol mb="1rem">
+        <Input
+          type="text"
+          placeholder="Safety Answer"
+          name="safetyAnswer"
+          mb="0.5rem"
+          value={resetData.safetyAnswer}
+          onChange={handleResetData}
+        />
+        <Warn>Please Answer Safety Question</Warn>
+      </GroupCol>
+      <GroupCol mb="1rem">
+        <Input
+          type="password"
+          placeholder="PASSWORD"
+          name="password"
+          mb="0.5rem"
+          value={resetData.password}
+          onChange={handleResetData}
+        />
+        <Warn>Please enter password </Warn>
       </GroupCol>
       <GroupCol mb="3rem">
         <Input
           type="password"
-          placeholder="CONFIRM PASSWORD"
-          name="confirmNewPassword"
+          placeholder="PASSWORD"
+          name="confirmPassword"
           mb="0.5rem"
-          onChange={handleNewPassword}
+          value={resetData.confirmPassword}
+          onChange={handleResetData}
         />
         <Warn>Confirm password incorrect</Warn>
       </GroupCol>
-      <SubmitButton onClick={submitNewPassword}>SUBMIT</SubmitButton>
+      <SubmitButton mb="5rem" onClick={resetPassword}>
+        SUBMIT
+      </SubmitButton>
     </>
   );
 };

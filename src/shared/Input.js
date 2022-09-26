@@ -16,3 +16,26 @@ export const Input = styled.input`
     border-bottom: 2px solid #fcee0a;
   }
 `;
+
+export const Select = styled.select`
+  width: 100%;
+  font-size: 1.25rem;
+  padding: 0.25rem 0;
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #fff;
+  outline: none;
+  transition: 0.5s;
+  margin-bottom: ${(props) => props.mb};
+
+  &:focus {
+    border-bottom: 2px solid #fcee0a;
+  }
+`;
+
+export const Option = styled.option`
+  background-color: #000;
+  color: #fff;
+  transition: 0.3;
+`;

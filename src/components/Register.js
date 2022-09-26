@@ -1,8 +1,11 @@
 import { GroupCol } from "../shared/Group";
-import { Input } from "../shared/Input";
+import { Input, Select, Option } from "../shared/Input";
 import { Warn } from "../shared/Text";
 import { SubmitButton } from "../shared/Button";
 import { useState } from "react";
+import { userRegister } from "../api/api";
+
+import { Model } from "./Model";
 
 export const Register = () => {
   const [register, setRegister] = useState({
@@ -10,31 +13,25 @@ export const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    safetyQuestion: "",
+    safetyAnswer: "",
   });
 
   const handleRegister = (e) => {
     const { name, value } = e.target;
-    switch (name) {
-      case "name":
-        setRegister({ ...register, [name]: value });
-        break;
-      case "email":
-        setRegister({ ...register, [name]: value });
-        break;
-      case "password":
-        setRegister({ ...register, [name]: value });
-        break;
-      case "confirmPassword":
-        setRegister({ ...register, [name]: value });
-        break;
-      default:
-        return;
-    }
+    setRegister({ ...register, [name]: value });
   };
 
-  const submitRegister = (e) => {
+  const submitRegister = async (e) => {
     e.preventDefault();
     console.log(register);
+    const result = await userRegister(register);
+    if (result.token) {
+      localStorage.setItem("token", result.token);
+      localStorage.setItem("user", result.name);
+    } else {
+      console.log(result);
+    }
   };
 
   return (
@@ -72,7 +69,7 @@ export const Register = () => {
         />
         <Warn>Please enter password </Warn>
       </GroupCol>
-      <GroupCol mb="3rem">
+      <GroupCol mb="1rem">
         <Input
           type="password"
           placeholder="PASSWORD"
@@ -83,9 +80,29 @@ export const Register = () => {
         />
         <Warn>Confirm password incorrect</Warn>
       </GroupCol>
-      <SubmitButton mb="3rem" onClick={submitRegister}>
+      <GroupCol mb="1rem">
+        <Select name="safetyQuestion" mb="1rem" onChange={handleRegister}>
+          <Option value="">Select Safety Question</Option>
+          <Option value="Q1_FIRST_PET_NAME">Q : Name of First Pet ?</Option>
+          <Option value="Q2_PARENTS_CITY">Q : Parents' Living City ?</Option>
+        </Select>
+      </GroupCol>
+      <GroupCol mb="3rem">
+        <Input
+          type="text"
+          placeholder="Safety Answer"
+          name="safetyAnswer"
+          mb="0.5rem"
+          value={register.safetyAnswer}
+          onChange={handleRegister}
+        />
+        <Warn>Please Answer Safety Question</Warn>
+      </GroupCol>
+      <SubmitButton mb="5rem" onClick={submitRegister}>
         SUBMIT
       </SubmitButton>
+
+      <Model />
     </>
   );
 };

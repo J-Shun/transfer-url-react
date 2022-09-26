@@ -1,23 +1,30 @@
 import { Container } from "../shared/Container";
-import { GroupCol } from "../shared/Group";
+import { Group, GroupCol } from "../shared/Group";
 import { CgProfile } from "react-icons/cg";
 import { Card } from "../shared/Card";
+import { CardTitle, CardSubTitle, CardText } from "../shared/Text";
 import { SubmitButton } from "../shared/Button";
 import { Input } from "../shared/Input";
 
 export const Profile = () => {
   return (
     <>
-      <h2>Profile</h2>
       <Container style={{ color: "#fff" }}>
         <Card>
+          <CardTitle>Profile</CardTitle>
           <CgProfile />
-          <h3>[EMAIL]</h3>
           <GroupCol mb="2rem">
-            <h3>[NAME]</h3>
-            <Input type="text" />
+            <CardSubTitle>[EMAIL]</CardSubTitle>
+            <CardText>attrasd123456@gmail.com</CardText>
           </GroupCol>
-          <SubmitButton>SAVE</SubmitButton>
+          <GroupCol mb="2rem">
+            <CardSubTitle>[NAME]</CardSubTitle>
+            <CardText>{localStorage.user}</CardText>
+            {/* <Input type="text" /> */}
+          </GroupCol>
+          <Group justify="center" mb="2rem">
+            <SubmitButton>SAVE</SubmitButton>
+          </Group>
         </Card>
       </Container>
     </>

@@ -3,7 +3,7 @@ import { Group, GroupCol } from "../shared/Group";
 import { BsClipboardData } from "react-icons/bs";
 import { RiDeleteBack2Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
-import { Tag } from "../shared/Text";
+import { CardSubTitle, Tag } from "../shared/Text";
 
 export const UrlData = () => {
   return (
@@ -23,11 +23,11 @@ export const UrlData = () => {
         />
       </Group>
       <GroupCol justify="space-between" mb="1rem">
-        <h4>[SHORT URL]</h4>
+        <CardSubTitle>[SHORT URL]</CardSubTitle>
         <p>https://this_is_STEAM</p>
       </GroupCol>
       <GroupCol mb="1rem">
-        <h4>[Tags]</h4>
+        <CardSubTitle>[Tags]</CardSubTitle>
         <Group items="center" wrap="true">
           <Tag>#Good</Tag>
           <Tag>#Great</Tag>
@@ -39,13 +39,13 @@ export const UrlData = () => {
         </Group>
       </GroupCol>
       <GroupCol mb="1rem">
-        <h4>[Original URL]</h4>
+        <CardSubTitle>[Original URL]</CardSubTitle>
         <p>
           https://xd.adobe.com/view/c0763dbe-fc15-42e8-be0b-8956ed03e675-9525/screen/75f1e23a-87fd-4eee-8cd4-5f16e0cabee8/specs/
         </p>
       </GroupCol>
       <GroupCol mb="1rem">
-        <h4>[Visitor]</h4>
+        <CardSubTitle>[Visitor]</CardSubTitle>
         <p>50</p>
       </GroupCol>
     </Card>

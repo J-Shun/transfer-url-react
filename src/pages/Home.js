@@ -63,7 +63,7 @@ export const Home = () => {
       ) : category === "register" ? (
         <Register />
       ) : (
-        <ForgetPassword setLoginForm={setLoginForm} />
+        <ForgetPassword setCategory={setCategory} setLoginForm={setLoginForm} />
       )}
     </Form>
   );
