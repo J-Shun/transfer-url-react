@@ -1,9 +1,62 @@
-import { EditPassword } from "./EditPassword";
-import { HeaderSection } from "./styles/Header.styled";
-import { Nav } from "./styles/Nav.styled";
+import styled from "styled-components";
+import { HeaderTitle } from "../shared/Text";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
+
+const HeaderSection = styled.div`
+  .header-bar {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+    font-size: 2rem;
+    color: #fcee0a;
+    background-color: #000;
+    padding: 0 2rem;
+  }
+
+  .header-icon {
+    cursor: pointer;
+  }
+
+  .header-nav {
+    position: fixed;
+    top: 4rem;
+    right: 0;
+    left: 0;
+    z-index: 5;
+    background-color: #000;
+    height: 100vh;
+    transition: ease-out 0.3s;
+    transform: ${(props) =>
+      props.showNav ? "translateX(0)" : "translateX(100%)"};
+    opacity: 0.9;
+  }
+
+  ul {
+    padding-top: 3rem;
+  }
+
+  .header-nav-link {
+    display: block;
+    font-size: 1.75rem;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    padding: 2rem 0;
+    transition: 0.5s;
+    cursor: pointer;
+
+    &:hover {
+      color: #fcee0a;
+    }
+  }
+`;
 
 export const Header = () => {
   const [showNav, setShowNav] = useState(false);
@@ -14,37 +67,51 @@ export const Header = () => {
   const logout = () => {
     localStorage.removeItem("token");
   };
+
   return (
     <>
-      <HeaderSection>
-        <div className="header-selection">
-          <h1>Transfer URL</h1>
-          <GiHamburgerMenu className="header-bar" onClick={toggleNav} />
+      <HeaderSection showNav={showNav}>
+        <div className="header-bar">
+          <Link to="/user/">
+            <HeaderTitle
+              onClick={() => {
+                setShowNav(false);
+              }}
+            >
+              Transfer URL
+            </HeaderTitle>
+          </Link>
+          <GiHamburgerMenu className="header-icon" onClick={toggleNav} />
         </div>
-        <Nav showNav={showNav}>
+
+        <nav className="header-nav">
           <ul>
             <li onClick={toggleNav}>
-              <Link className="nav-link">Profile</Link>
+              <Link to="/user/profile" className="header-nav-link">
+                Profile
+              </Link>
             </li>
             <li onClick={toggleNav}>
-              <Link to="/updatePassword" className="nav-link">
+              <Link to="/user/editPassword" className="header-nav-link">
                 Edit Password
               </Link>
             </li>
             <li
-              className="nav-link"
               onClick={() => {
                 toggleNav();
                 logout();
               }}
             >
-              Logout
+              <Link to="/" className="header-nav-link">
+                Logout
+              </Link>
             </li>
           </ul>
-        </Nav>
-
-        <EditPassword />
+        </nav>
       </HeaderSection>
+
+      <div style={{ paddingTop: "6rem" }}></div>
+      <Outlet />
     </>
   );
 };

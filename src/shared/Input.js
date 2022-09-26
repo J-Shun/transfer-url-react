@@ -10,4 +10,9 @@ export const Input = styled.input`
   border-bottom: 2px solid #fff;
   outline: none;
   margin-bottom: ${(props) => props.mb};
+  transition: ease-out 0.5s;
+
+  &:focus {
+    border-bottom: 2px solid #fcee0a;
+  }
 `;

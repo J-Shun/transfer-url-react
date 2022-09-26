@@ -1,12 +1,13 @@
-import { UrlDataSection } from "./styles/UrlDataSection.styled";
-import { Group, GroupCol } from "./styles/Group.styled";
+import { Card } from "../shared/Card";
+import { Group, GroupCol } from "../shared/Group";
 import { BsClipboardData } from "react-icons/bs";
 import { RiDeleteBack2Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
+import { Tag } from "../shared/Text";
 
 export const UrlData = () => {
   return (
-    <UrlDataSection>
+    <Card>
       <Group justify="space-between" mb="1rem">
         <FiEdit style={{ width: "28px", height: "28px", cursor: "pointer" }} />
         <BsClipboardData
@@ -28,13 +29,13 @@ export const UrlData = () => {
       <GroupCol mb="1rem">
         <h4>[Tags]</h4>
         <Group items="center" wrap="true">
-          <span>#Good</span>
-          <span>#Great</span>
-          <span>#arivederci</span>
-          <span>#Great</span>
-          <span>#Beautiful</span>
-          <span>#Nanimonai</span>
-          <span>#Wakaranai</span>
+          <Tag>#Good</Tag>
+          <Tag>#Great</Tag>
+          <Tag>#arivederci</Tag>
+          <Tag>#Great</Tag>
+          <Tag>#Beautiful</Tag>
+          <Tag>#Nanimonai</Tag>
+          <Tag>#Wakaranai</Tag>
         </Group>
       </GroupCol>
       <GroupCol mb="1rem">
@@ -47,6 +48,6 @@ export const UrlData = () => {
         <h4>[Visitor]</h4>
         <p>50</p>
       </GroupCol>
-    </UrlDataSection>
+    </Card>
   );
 };

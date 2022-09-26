@@ -1,24 +1,18 @@
-import { Input } from "../components/styles/Input.styled";
-import { Button, CreateButton } from "../components/styles/Button.styled";
-import { Group } from "../components/styles/Group.styled";
+import { Input } from "../shared/Input";
+import { Button, CreateButton } from "../shared/Button";
+import { Group } from "../shared/Group";
 import { ShortLink } from "../components/ShortLink";
 import { UrlData } from "../components/UrlData";
-import { Container } from "../components/styles/Container.styled";
-import { Header } from "../components/Header";
+import { Container } from "../shared/Container";
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import { Outlet } from "react-router-dom";
 
 export const User = () => {
   const [shortLink, setShortLink] = useState(false);
 
   return (
     <>
-      <Header />
-      <Outlet />
-      {/* <Container>
-        <div style={{ paddingTop: "6rem" }}></div>
-
+      <Container>
         <Group justify="space-between" mb="2rem">
           <Button>Sort By</Button>
           <Button>SHOW PAGE</Button>
@@ -62,7 +56,7 @@ export const User = () => {
           <li>5</li>
         </ul>
       </Container>
-      <ShortLink setShortLink={setShortLink} shortLink={shortLink} /> */}
+      <ShortLink setShortLink={setShortLink} shortLink={shortLink} />
     </>
   );
 };

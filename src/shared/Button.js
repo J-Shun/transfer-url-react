@@ -57,11 +57,11 @@ export const CreateButton = styled(Button)`
 `;
 
 export const SelectButton = styled(Button)`
-  width: 45%;
+  width: ${(props) => props.width || "100%"};
   color: #fff;
   background-color: transparent;
   border: none;
-  z-index: 2;
+  z-index: 1;
 
   &::before {
     content: "";

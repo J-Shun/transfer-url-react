@@ -153,3 +153,7 @@ body {
   /* background-image: linear-gradient(#000d18, #01487c); */
   background-color: #16191f;
 }
+
+a {
+  text-decoration: none;
+}

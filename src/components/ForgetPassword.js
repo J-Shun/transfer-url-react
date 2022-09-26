@@ -1,7 +1,7 @@
-import { GroupCol } from "./styles/Group.styled";
-import { Input } from "./styles/Input.styled";
-import { Warn } from "./styles/Text.styled";
-import { SubmitButton } from "./styles/Button.styled";
+import { GroupCol } from "../shared/Group";
+import { Input } from "../shared/Input";
+import { Warn } from "../shared/Text";
+import { SubmitButton } from "../shared/Button";
 import { useState } from "react";
 
 export const ForgetPassword = () => {
