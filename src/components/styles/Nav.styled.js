@@ -17,10 +17,12 @@ export const Nav = styled.nav`
     padding-top: 3rem;
   }
 
-  li {
+  .nav-link {
+    display: block;
     font-size: 1.75rem;
     color: #fff;
     text-align: center;
+    text-decoration: none;
     padding: 2rem 0;
     transition: 0.5s;
     cursor: pointer;

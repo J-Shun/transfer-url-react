@@ -34,6 +34,7 @@ export const Register = () => {
 
   const submitRegister = (e) => {
     e.preventDefault();
+    console.log(register);
   };
 
   return (

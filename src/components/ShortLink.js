@@ -33,8 +33,8 @@ export const ShortLink = ({ setShortLink, shortLink }) => {
                   position: "absolute",
                   right: "0",
                   margin: "0 0.5rem",
-                  width: "18px",
-                  height: "18px",
+                  width: "22px",
+                  height: "22px",
                   cursor: "pointer",
                 }}
                 onClick={paste}

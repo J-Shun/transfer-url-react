@@ -7,14 +7,16 @@ import { Container } from "../components/styles/Container.styled";
 import { Header } from "../components/Header";
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
+import { Outlet } from "react-router-dom";
 
-export const Admin = () => {
+export const User = () => {
   const [shortLink, setShortLink] = useState(false);
 
   return (
     <>
       <Header />
-      <Container>
+      <Outlet />
+      {/* <Container>
         <div style={{ paddingTop: "6rem" }}></div>
 
         <Group justify="space-between" mb="2rem">
@@ -38,7 +40,6 @@ export const Admin = () => {
         </Group>
 
         <CreateButton
-          // mt="6rem"
           onClick={() => {
             setShortLink(true);
           }}
@@ -61,7 +62,7 @@ export const Admin = () => {
           <li>5</li>
         </ul>
       </Container>
-      <ShortLink setShortLink={setShortLink} shortLink={shortLink} />
+      <ShortLink setShortLink={setShortLink} shortLink={shortLink} /> */}
     </>
   );
 };

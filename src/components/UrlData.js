@@ -27,7 +27,7 @@ export const UrlData = () => {
       </GroupCol>
       <GroupCol mb="1rem">
         <h4>[Tags]</h4>
-        <Group items="center" wrap>
+        <Group items="center" wrap="true">
           <span>#Good</span>
           <span>#Great</span>
           <span>#arivederci</span>

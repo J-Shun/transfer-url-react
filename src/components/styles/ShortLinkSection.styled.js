@@ -15,9 +15,12 @@ export const ShortLinkSection = styled.div`
     props.shortLink ? "translateX(0)" : "translateX(-100%)"};
 
   .shortLink-card {
+    max-width: 500px;
     border: 2px solid #fff;
     padding: 0 1rem;
     margin-top: 3rem;
+    margin-left: auto;
+    margin-right: auto;
     color: #fff;
   }
 

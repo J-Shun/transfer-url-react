@@ -4,7 +4,7 @@ import { Warn, Help } from "./styles/Text.styled";
 import { SubmitButton } from "./styles/Button.styled";
 import { useState } from "react";
 
-export const Login = () => {
+export const Login = ({ setCategory, setLoginForm }) => {
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -26,6 +26,7 @@ export const Login = () => {
 
   const submitLogin = (e) => {
     e.preventDefault();
+    console.log(login);
   };
 
   return (
@@ -55,7 +56,17 @@ export const Login = () => {
       <SubmitButton mb="2.5rem" onClick={submitLogin}>
         SUBMIT
       </SubmitButton>
-      <Help>FORGET PASSWORD</Help>
+      <Help
+        onClick={() => {
+          setCategory("forgetPassword");
+          setLoginForm({
+            login: false,
+            register: false,
+          });
+        }}
+      >
+        FORGET PASSWORD
+      </Help>
     </>
   );
 };
