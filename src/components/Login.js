@@ -3,9 +3,9 @@ import { Input } from "../shared/Input";
 import { Warn, Help } from "../shared/Text";
 import { SubmitButton } from "../shared/Button";
 import { useState, useContext } from "react";
-import { userLogin } from "../api/api";
+import { sendData } from "../api/api";
 import { Model } from "./Model";
-
+import { loginRoute } from "../api/routes";
 import { ModelContext } from "../App";
 import { isFill, isValidEmail } from "../utilities/checkForm";
 
@@ -50,13 +50,12 @@ export const Login = ({ setCategory, setLoginForm }) => {
   const submitLogin = async (e) => {
     e.preventDefault();
     if (!isFormPass()) return;
-    console.log("break point");
 
-    const result = await userLogin(login);
-    console.log(result);
+    const result = await sendData("post", loginRoute, login);
     if (result.token) {
       localStorage.setItem("token", result.token);
       localStorage.setItem("user", result.name);
+      localStorage.setItem("email", result.email);
       alert("loading page");
     } else if (result.message === "會員不存在") {
       modelDispatch({

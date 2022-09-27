@@ -3,7 +3,8 @@ import { Input, Select, Option } from "../shared/Input";
 import { Warn } from "../shared/Text";
 import { SubmitButton } from "../shared/Button";
 import { useState, useContext } from "react";
-import { userRegister } from "../api/api";
+import { sendData } from "../api/api";
+import { signUpRoute } from "../api/routes";
 import { Model } from "./Model";
 import { ModelContext } from "../App";
 import { isFill, isValidEmail, isValidPassword } from "../utilities/checkForm";
@@ -89,18 +90,17 @@ export const Register = () => {
     e.preventDefault();
     if (!isFormPass()) return;
 
-    console.log(register);
-    const result = await userRegister(register);
+    const result = await sendData("post", signUpRoute, register);
     if (result.token) {
       localStorage.setItem("token", result.token);
       localStorage.setItem("user", result.name);
+      localStorage.setItem("email", result.email);
       modelDispatch({
         type: "show",
         status: "success",
         message: "account created",
       });
     } else {
-      console.log(result);
       modelDispatch({
         type: "show",
         status: "error",

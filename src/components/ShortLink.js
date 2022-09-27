@@ -7,6 +7,7 @@ import { CardTitle, CardSubTitle } from "../shared/Text";
 import { Card } from "../shared/Card";
 import { MdContentPaste } from "react-icons/md";
 import { useState } from "react";
+import { createShortLink } from "../api/api";
 
 import styled from "styled-components";
 
@@ -26,7 +27,7 @@ const ShortLinkSection = styled.div`
 `;
 
 export const ShortLink = ({ setShortLink, shortLink }) => {
-  const [formDate, setFormData] = useState({
+  const [formData, setFormData] = useState({
     originUrl: "",
     tags: "",
     shortUrl: "",
@@ -40,11 +41,18 @@ export const ShortLink = ({ setShortLink, shortLink }) => {
 
   const paste = async () => {
     const pasteWord = await navigator.clipboard.readText();
-    originalUrlRef.current.value = pasteWord;
+    setFormData({ ...formData, originUrl: pasteWord });
   };
 
-  const createLink = () => {
-    console.log(formDate);
+  const handleForm = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const createLink = async () => {
+    console.log(formData);
+    const result = await createShortLink(formData);
+    console.log(result);
   };
 
   return (
@@ -63,6 +71,8 @@ export const ShortLink = ({ setShortLink, shortLink }) => {
                 style={{ paddingRight: "2rem" }}
                 ref={originalUrlRef}
                 name="originUrl"
+                value={formData.originUrl}
+                onChange={handleForm}
               />
               <MdContentPaste
                 style={{
@@ -86,37 +96,53 @@ export const ShortLink = ({ setShortLink, shortLink }) => {
               placeholder="TAG: #example #example2"
               mb="1rem"
               name="tags"
+              onChange={handleForm}
             />
-            <Input type="text" placeholder="Short URL Name" name="shortUrl" />
+            <Input
+              type="text"
+              placeholder="Short URL Name"
+              name="shortUrl"
+              onChange={handleForm}
+            />
           </GroupCol>
 
           <GroupCol mb="2rem">
-            <CardSubTitle>[CUSTOMIZE]</CardSubTitle>
-            <Input type="text" placeholder="TYPE" mb="1rem" name="type"></Input>
+            <CardSubTitle>[OG : CUSTOMIZE]</CardSubTitle>
+            <Input
+              type="text"
+              placeholder="TYPE"
+              mb="1rem"
+              name="type"
+              onChange={handleForm}
+            />
             <Input
               type="text"
               placeholder="TITLE"
               mb="1rem"
               name="title"
-            ></Input>
+              onChange={handleForm}
+            />
             <Input
               type="text"
               placeholder="DESCRIPTION"
               mb="1rem"
               name="description"
-            ></Input>
+              onChange={handleForm}
+            />
             <Input
               type="text"
               placeholder="Main URL"
               mb="1rem"
               name="url"
-            ></Input>
+              onChange={handleForm}
+            />
             <Input
               type="text"
               placeholder="IMAGE"
               mb="1rem"
               name="image"
-            ></Input>
+              onChange={handleForm}
+            />
           </GroupCol>
 
           <Group justify="center" gap="2rem" mb="2rem">

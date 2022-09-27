@@ -5,7 +5,8 @@ import { SubmitButton } from "../shared/Button";
 import { Group } from "../shared/Group";
 import { CardTitle } from "../shared/Text";
 import { useState, useContext } from "react";
-import { userEditPassword } from "../api/api";
+import { sendData } from "../api/api";
+import { editPasswordRoute } from "../api/routes";
 import { Model } from "../components/Model";
 import { ModelContext } from "../App";
 import { isFill, isValidPassword } from "../utilities/checkForm";
@@ -50,8 +51,7 @@ export const EditPassword = () => {
 
   const submitNewPassword = async () => {
     if (!isFormPass()) return;
-    const result = await userEditPassword(password);
-    console.log(result);
+    const result = await sendData("patch", editPasswordRoute, password);
     if (result.status === "success") {
       modelDispatch({
         type: "show",

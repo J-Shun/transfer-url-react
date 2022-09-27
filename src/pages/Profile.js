@@ -5,7 +5,8 @@ import { CardTitle, CardSubTitle, CardText } from "../shared/Text";
 import { SubmitButton } from "../shared/Button";
 import { Input } from "../shared/Input";
 import { useState, useContext } from "react";
-import { updateFile } from "../api/api";
+import { sendData } from "../api/api";
+import { updateFileRoute } from "../api/routes";
 import { Model } from "../components/Model";
 import { ModelContext } from "../App";
 import { isFill } from "../utilities/checkForm";
@@ -36,7 +37,7 @@ export const Profile = () => {
 
   const submit = async () => {
     if (!isFormPass()) return;
-    const result = await updateFile(profile);
+    const result = await sendData("patch", updateFileRoute, profile);
     if (result.status === "success") {
       localStorage.setItem("user", result.user.name);
       localStorage.setItem("email", result.user.email);
@@ -61,7 +62,7 @@ export const Profile = () => {
           <CardTitle mb="2rem">Profile</CardTitle>
           <GroupCol mb="2rem">
             <CardSubTitle>[EMAIL]</CardSubTitle>
-            <CardText>{localStorage.email}</CardText>
+            <Input value={localStorage.email}></Input>
           </GroupCol>
           <GroupCol mb="2rem">
             <CardSubTitle>[NAME]</CardSubTitle>
