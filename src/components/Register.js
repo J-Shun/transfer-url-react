@@ -2,12 +2,14 @@ import { GroupCol } from "../shared/Group";
 import { Input, Select, Option } from "../shared/Input";
 import { Warn } from "../shared/Text";
 import { SubmitButton } from "../shared/Button";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { userRegister } from "../api/api";
-
 import { Model } from "./Model";
+import { ModelContext } from "../App";
+import { isFill, isValidEmail, isValidPassword } from "../utilities/checkForm";
 
 export const Register = () => {
+  const { modelDispatch } = useContext(ModelContext);
   const [register, setRegister] = useState({
     name: "",
     email: "",
@@ -22,15 +24,88 @@ export const Register = () => {
     setRegister({ ...register, [name]: value });
   };
 
+  const isFormPass = () => {
+    if (!isFill(register.name)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "empty name",
+      });
+      return false;
+    } else if (!isFill(register.email)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "empty email",
+      });
+      return false;
+    } else if (!isValidEmail(register.email)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "invalid email",
+      });
+      return false;
+    } else if (!isFill(register.password)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "empty password",
+      });
+      return false;
+    } else if (!isValidPassword(register.password)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "invalid password",
+      });
+      return false;
+    } else if (register.password !== register.confirmPassword) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "confirm password incorrect",
+      });
+      return false;
+    } else if (!isFill(register.safetyQuestion)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "question not selected",
+      });
+      return false;
+    } else if (!isFill(register.safetyAnswer)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "empty answer",
+      });
+      return false;
+    }
+    return true;
+  };
+
   const submitRegister = async (e) => {
     e.preventDefault();
+    if (!isFormPass()) return;
+
     console.log(register);
     const result = await userRegister(register);
     if (result.token) {
       localStorage.setItem("token", result.token);
       localStorage.setItem("user", result.name);
+      modelDispatch({
+        type: "show",
+        status: "success",
+        message: "account created",
+      });
     } else {
       console.log(result);
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "email already registered",
+      });
     }
   };
 
@@ -56,7 +131,7 @@ export const Register = () => {
           value={register.email}
           onChange={handleRegister}
         />
-        <Warn>Please enter a valid email </Warn>
+        <Warn>Need lowercase, uppercase, special character</Warn>
       </GroupCol>
       <GroupCol mb="1rem">
         <Input

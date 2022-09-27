@@ -1,32 +1,84 @@
 import { Container } from "../shared/Container";
 import { Group, GroupCol } from "../shared/Group";
-import { CgProfile } from "react-icons/cg";
 import { Card } from "../shared/Card";
 import { CardTitle, CardSubTitle, CardText } from "../shared/Text";
 import { SubmitButton } from "../shared/Button";
 import { Input } from "../shared/Input";
+import { useState, useContext } from "react";
+import { updateFile } from "../api/api";
+import { Model } from "../components/Model";
+import { ModelContext } from "../App";
+import { isFill } from "../utilities/checkForm";
 
 export const Profile = () => {
+  const { modelDispatch } = useContext(ModelContext);
+  const [profile, setProfile] = useState({
+    name: localStorage.user,
+  });
+
+  const handleProfile = (e) => {
+    const { name, value } = e.target;
+    setProfile({ ...profile, [name]: value });
+  };
+
+  const isFormPass = () => {
+    if (profile.name === localStorage.user) return;
+    if (!isFill(profile.name)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "empty name",
+      });
+      return;
+    }
+    return true;
+  };
+
+  const submit = async () => {
+    if (!isFormPass()) return;
+    const result = await updateFile(profile);
+    if (result.status === "success") {
+      localStorage.setItem("user", result.user.name);
+      localStorage.setItem("email", result.user.email);
+      modelDispatch({
+        type: "show",
+        status: "success",
+        message: "update profile",
+      });
+    } else {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "database no response",
+      });
+    }
+  };
+
   return (
     <>
       <Container style={{ color: "#fff" }}>
         <Card>
-          <CardTitle>Profile</CardTitle>
-          <CgProfile />
+          <CardTitle mb="2rem">Profile</CardTitle>
           <GroupCol mb="2rem">
             <CardSubTitle>[EMAIL]</CardSubTitle>
-            <CardText>attrasd123456@gmail.com</CardText>
+            <CardText>{localStorage.email}</CardText>
           </GroupCol>
           <GroupCol mb="2rem">
             <CardSubTitle>[NAME]</CardSubTitle>
-            <CardText>{localStorage.user}</CardText>
-            {/* <Input type="text" /> */}
+            <Input
+              type="text"
+              name="name"
+              value={profile.name}
+              onChange={handleProfile}
+            />
           </GroupCol>
           <Group justify="center" mb="2rem">
-            <SubmitButton>SAVE</SubmitButton>
+            <SubmitButton onClick={submit}>SAVE</SubmitButton>
           </Group>
         </Card>
       </Container>
+
+      <Model />
     </>
   );
 };

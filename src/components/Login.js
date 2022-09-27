@@ -2,10 +2,15 @@ import { GroupCol } from "../shared/Group";
 import { Input } from "../shared/Input";
 import { Warn, Help } from "../shared/Text";
 import { SubmitButton } from "../shared/Button";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { userLogin } from "../api/api";
+import { Model } from "./Model";
+
+import { ModelContext } from "../App";
+import { isFill, isValidEmail } from "../utilities/checkForm";
 
 export const Login = ({ setCategory, setLoginForm }) => {
+  const { modelDispatch } = useContext(ModelContext);
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -13,30 +18,58 @@ export const Login = ({ setCategory, setLoginForm }) => {
 
   const handleLogin = (e) => {
     const { name, value } = e.target;
-    switch (name) {
-      case "email":
-        setLogin({ ...login, [name]: value });
-        break;
-      case "password":
-        setLogin({ ...login, [name]: value });
-        break;
-      default:
-        return;
+    setLogin({ ...login, [name]: value });
+  };
+
+  const isFormPass = () => {
+    if (!isFill(login.email)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "empty email",
+      });
+      return false;
+    } else if (!isValidEmail(login.email)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "invalid email",
+      });
+      return false;
+    } else if (!isFill(login.password)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "empty password",
+      });
+      return false;
     }
+    return true;
   };
 
   const submitLogin = async (e) => {
     e.preventDefault();
+    if (!isFormPass()) return;
+    console.log("break point");
+
     const result = await userLogin(login);
     console.log(result);
     if (result.token) {
       localStorage.setItem("token", result.token);
       localStorage.setItem("user", result.name);
-      alert("success");
+      alert("loading page");
     } else if (result.message === "會員不存在") {
-      alert("Please enter correct account");
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "account not found",
+      });
     } else if (result.message === "密碼錯誤") {
-      alert("Please enter correct password");
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "wrong password",
+      });
     }
   };
 
@@ -78,6 +111,7 @@ export const Login = ({ setCategory, setLoginForm }) => {
       >
         FORGET PASSWORD
       </Help>
+      <Model />
     </>
   );
 };

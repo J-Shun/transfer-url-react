@@ -7,7 +7,7 @@ import { ForgetPassword } from "../components/ForgetPassword";
 import { Register } from "../components/Register";
 import { useState } from "react";
 
-const Form = styled.form`
+const Form = styled.div`
   position: relative;
   width: 100%;
   height: 100%;

@@ -1,11 +1,16 @@
-export const checkName = (name) => {
-  if (name.length < 0) return false;
+export const isFill = (data) => {
+  if (data.trim().length < 1) return false;
+  else return true;
 };
 
-export const checkSelectQuestion = (question) => {
-  if (question.length < 0) return false;
+export const isValidEmail = (email) => {
+  return email.match(
+    /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/
+  );
 };
 
-export const checkSafetyAnswer = (answer) => {
-  if (answer.length < 0) return false;
+export const isValidPassword = (password) => {
+  return password.match(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+  );
 };

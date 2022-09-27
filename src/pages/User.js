@@ -7,8 +7,15 @@ import { Container } from "../shared/Container";
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 
+import { getShortLinkList } from "../api/api";
+
 export const User = () => {
   const [shortLink, setShortLink] = useState(false);
+
+  const getData = async () => {
+    const result = await getShortLinkList();
+    console.log(result);
+  };
 
   return (
     <>
@@ -48,13 +55,17 @@ export const User = () => {
         <UrlData />
         <UrlData />
 
-        <ul style={{ paddingBottom: "3rem", display: "flex" }}>
+        <ul style={{ paddingBottom: "3rem", display: "flex", color: "#fff" }}>
           <li>1</li>
           <li>2</li>
           <li>3</li>
           <li>4</li>
           <li>5</li>
         </ul>
+
+        <button onClick={getData} style={{ color: "#000", fontSize: "2rem" }}>
+          button
+        </button>
       </Container>
       <ShortLink setShortLink={setShortLink} shortLink={shortLink} />
     </>

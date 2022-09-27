@@ -1,14 +1,16 @@
 import styled from "styled-components";
 import { BsExclamationCircleFill, BsFillCheckCircleFill } from "react-icons/bs";
+import { useContext } from "react";
+import { ModelContext } from "../App";
 
 const ModelSection = styled.div`
   width: 100vw;
   height: 100vh;
   inset: 0;
   position: fixed;
-  z-index: 5;
-  opacity: ${(props) => (props.model ? "1" : "1")};
-  transition: 0.3s;
+  z-index: ${(props) => (props.modelState.show ? "5" : "-1")};
+  opacity: ${(props) => (props.modelState.show ? "1" : "0")};
+  transition: 0.5s;
 
   .overlay {
     width: 100vw;
@@ -29,17 +31,20 @@ const ModelSection = styled.div`
     transform: translate(-50%, -50%);
     color: #fff;
     background: #000;
-    border: 2px solid #e23832;
+    border: 2px solid
+      ${(props) =>
+        props.modelState.status === "error" ? "#e23832" : "#287bff"};
     padding: 1.5rem 2rem;
     max-width: 600px;
-    min-width: 300px;
+    min-width: 310px;
 
     &::before {
       content: "";
       position: absolute;
       height: 50px;
       width: 8px;
-      background-color: #e23832;
+      background-color: ${(props) =>
+        props.modelState.status === "error" ? "#e23832" : "#287bff"};
       left: 0;
     }
 
@@ -48,7 +53,8 @@ const ModelSection = styled.div`
       position: absolute;
       height: 50px;
       width: 8px;
-      background-color: #e23832;
+      background-color: ${(props) =>
+        props.modelState.status === "error" ? "#e23832" : "#287bff"};
       right: 0;
     }
   }
@@ -68,20 +74,25 @@ const ModelSection = styled.div`
 
   h2 {
     text-align: center;
+    text-transform: uppercase;
     font-size: 2rem;
     margin-bottom: 1rem;
   }
 
   p {
     font-size: 1.5rem;
+    text-align: center;
     margin-bottom: 2rem;
   }
 
   button {
     padding: 0.5rem 1rem;
     background-color: #000;
-    border: 1px solid #e23832;
-    color: #e23832;
+    border: 1px solid
+      ${(props) =>
+        props.modelState.status === "error" ? "#e23832" : "#287bff"};
+    color: ${(props) =>
+      props.modelState.status === "error" ? "#e23832" : "#287bff"};
     font-size: 1.25rem;
     margin-bottom: 1rem;
     transition: 0.3s;
@@ -95,18 +106,24 @@ const ModelSection = styled.div`
 `;
 
 export const Model = () => {
-  const retry = (e) => {
+  const { modelState, modelDispatch } = useContext(ModelContext);
+  const confirm = (e) => {
     e.preventDefault();
+    modelDispatch({ type: "hide" });
   };
+
   return (
-    <ModelSection>
+    <ModelSection modelState={modelState}>
       <div className="overlay"></div>
       <div className="model-content">
-        <BsExclamationCircleFill className="warning" />
-        <BsFillCheckCircleFill className="success" />
-        <h2>-- ERROR --</h2>
-        <p>Wrong Password</p>
-        <button onClick={retry}>RETRY</button>
+        {modelState.status === "error" ? (
+          <BsExclamationCircleFill className="warning" />
+        ) : (
+          <BsFillCheckCircleFill className="success" />
+        )}
+        <h2>-- {modelState.status} --</h2>
+        <p>{modelState.message}</p>
+        <button onClick={confirm}>CONFIRM</button>
       </div>
     </ModelSection>
   );

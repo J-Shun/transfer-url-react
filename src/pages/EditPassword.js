@@ -4,10 +4,14 @@ import { Input } from "../shared/Input";
 import { SubmitButton } from "../shared/Button";
 import { Group } from "../shared/Group";
 import { CardTitle } from "../shared/Text";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { userEditPassword } from "../api/api";
+import { Model } from "../components/Model";
+import { ModelContext } from "../App";
+import { isFill, isValidPassword } from "../utilities/checkForm";
 
 export const EditPassword = () => {
+  const { modelDispatch } = useContext(ModelContext);
   const [password, setPassword] = useState({
     password: "",
     confirmPassword: "",
@@ -18,10 +22,50 @@ export const EditPassword = () => {
     setPassword({ ...password, [name]: value });
   };
 
+  const isFormPass = () => {
+    if (!isFill(password.password)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "empty password",
+      });
+      return false;
+    } else if (!isValidPassword(password.password)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "invalid password",
+      });
+      return false;
+    } else if (password.password !== password.confirmPassword) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "confirm password incorrect",
+      });
+      return false;
+    }
+    return true;
+  };
+
   const submitNewPassword = async () => {
-    console.log(password);
+    if (!isFormPass()) return;
     const result = await userEditPassword(password);
     console.log(result);
+    if (result.status === "success") {
+      modelDispatch({
+        type: "show",
+        status: "success",
+        message: "password reset success",
+      });
+      setPassword({ password: "", confirmPassword: "" });
+    } else {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "database no response",
+      });
+    }
   };
 
   return (
@@ -52,6 +96,8 @@ export const EditPassword = () => {
           </Group>
         </Card>
       </Container>
+
+      <Model />
     </>
   );
 };
