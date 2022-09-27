@@ -1,12 +1,12 @@
 import { Container } from "../shared/Container";
 import { Group, GroupCol } from "../shared/Group";
 import { Card } from "../shared/Card";
-import { CardTitle, CardSubTitle, CardText } from "../shared/Text";
+import { CardTitle, CardSubTitle } from "../shared/Text";
 import { SubmitButton } from "../shared/Button";
 import { Input } from "../shared/Input";
 import { useState, useContext } from "react";
 import { sendData } from "../api/api";
-import { updateFileRoute } from "../api/routes";
+import { url, updateFileRoute } from "../api/routes";
 import { Model } from "../components/Model";
 import { ModelContext } from "../App";
 import { isFill } from "../utilities/checkForm";
@@ -37,7 +37,7 @@ export const Profile = () => {
 
   const submit = async () => {
     if (!isFormPass()) return;
-    const result = await sendData("patch", updateFileRoute, profile);
+    const result = await sendData("patch", url + updateFileRoute, profile);
     if (result.status === "success") {
       localStorage.setItem("user", result.user.name);
       localStorage.setItem("email", result.user.email);

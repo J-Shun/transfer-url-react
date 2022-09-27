@@ -9,7 +9,7 @@ const HeaderSection = styled.div`
     position: fixed;
     right: 0;
     left: 0;
-    z-index: 1;
+    z-index: 2;
     display: flex;
     justify-content: space-between;
     align-items: center;

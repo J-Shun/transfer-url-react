@@ -7,8 +7,8 @@ import { CardTitle, CardSubTitle } from "../shared/Text";
 import { Card } from "../shared/Card";
 import { MdContentPaste } from "react-icons/md";
 import { useState } from "react";
-import { createShortLink } from "../api/api";
-
+import { sendData } from "../api/api";
+import { createShortLinkRoute } from "../api/routes";
 import styled from "styled-components";
 
 const ShortLinkSection = styled.div`
@@ -51,7 +51,7 @@ export const ShortLink = ({ setShortLink, shortLink }) => {
 
   const createLink = async () => {
     console.log(formData);
-    const result = await createShortLink(formData);
+    const result = await sendData("post", createShortLinkRoute, formData);
     console.log(result);
   };
 

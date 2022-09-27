@@ -60,7 +60,7 @@ export const Tag = styled.span`
   font-size: 1.25rem;
   background-color: #287bff;
   margin: 0.25rem;
-  padding: 0.25rem 0.25rem;
+  padding: 0.25rem 0.5rem;
 
   &:hover {
     background-color: #e23832;

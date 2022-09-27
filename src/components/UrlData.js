@@ -5,7 +5,8 @@ import { RiDeleteBack2Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { CardSubTitle, Tag } from "../shared/Text";
 
-export const UrlData = () => {
+export const UrlData = ({ data }) => {
+  console.log(data);
   return (
     <Card>
       <Group justify="space-between" mb="1rem">
@@ -40,13 +41,11 @@ export const UrlData = () => {
       </GroupCol>
       <GroupCol mb="1rem">
         <CardSubTitle>[Original URL]</CardSubTitle>
-        <p>
-          https://xd.adobe.com/view/c0763dbe-fc15-42e8-be0b-8956ed03e675-9525/screen/75f1e23a-87fd-4eee-8cd4-5f16e0cabee8/specs/
-        </p>
+        <p>{data.originUrl}</p>
       </GroupCol>
       <GroupCol mb="1rem">
-        <CardSubTitle>[Visitor]</CardSubTitle>
-        <p>50</p>
+        <CardSubTitle>[No Repeat Visitors]</CardSubTitle>
+        <p>{data.nonDupClicks}</p>
       </GroupCol>
     </Card>
   );

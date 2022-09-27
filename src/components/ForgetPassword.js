@@ -5,7 +5,7 @@ import { SubmitButton } from "../shared/Button";
 import { Select, Option } from "../shared/Input";
 import { useState, useContext } from "react";
 import { sendData } from "../api/api";
-import { resetPasswordRoute } from "../api/routes";
+import { url, resetPasswordRoute } from "../api/routes";
 import { Model } from "./Model";
 import { ModelContext } from "../App";
 import { isFill, isValidEmail, isValidPassword } from "../utilities/checkForm";
@@ -83,7 +83,7 @@ export const ForgetPassword = ({ setCategory, setLoginForm }) => {
     e.preventDefault();
     if (!isFormPass()) return;
 
-    const result = await sendData("patch", resetPasswordRoute, resetData);
+    const result = await sendData("patch", url + resetPasswordRoute, resetData);
     if (result.status === "success") {
       setCategory("login");
       modelDispatch({

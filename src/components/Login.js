@@ -5,7 +5,7 @@ import { SubmitButton } from "../shared/Button";
 import { useState, useContext } from "react";
 import { sendData } from "../api/api";
 import { Model } from "./Model";
-import { loginRoute } from "../api/routes";
+import { url, loginRoute } from "../api/routes";
 import { ModelContext } from "../App";
 import { isFill, isValidEmail } from "../utilities/checkForm";
 
@@ -51,7 +51,7 @@ export const Login = ({ setCategory, setLoginForm }) => {
     e.preventDefault();
     if (!isFormPass()) return;
 
-    const result = await sendData("post", loginRoute, login);
+    const result = await sendData("post", url + loginRoute, login);
     if (result.token) {
       localStorage.setItem("token", result.token);
       localStorage.setItem("user", result.name);

@@ -12,7 +12,7 @@ export const Button = styled.button`
 export const SubmitButton = styled(Button)`
   color: #fff;
   background-color: transparent;
-  padding: 1rem 0.5rem;
+  padding: 1rem 1.5rem;
   border-left: 1px solid #fff;
   border-right: 1px solid #fff;
   border-top: none;

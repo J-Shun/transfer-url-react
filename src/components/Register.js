@@ -4,7 +4,7 @@ import { Warn } from "../shared/Text";
 import { SubmitButton } from "../shared/Button";
 import { useState, useContext } from "react";
 import { sendData } from "../api/api";
-import { signUpRoute } from "../api/routes";
+import { url, signUpRoute } from "../api/routes";
 import { Model } from "./Model";
 import { ModelContext } from "../App";
 import { isFill, isValidEmail, isValidPassword } from "../utilities/checkForm";
@@ -90,7 +90,7 @@ export const Register = () => {
     e.preventDefault();
     if (!isFormPass()) return;
 
-    const result = await sendData("post", signUpRoute, register);
+    const result = await sendData("post", url + signUpRoute, register);
     if (result.token) {
       localStorage.setItem("token", result.token);
       localStorage.setItem("user", result.name);
