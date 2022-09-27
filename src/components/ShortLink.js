@@ -6,6 +6,7 @@ import { Container } from "../shared/Container";
 import { CardTitle, CardSubTitle } from "../shared/Text";
 import { Card } from "../shared/Card";
 import { MdContentPaste } from "react-icons/md";
+import { useState } from "react";
 
 import styled from "styled-components";
 
@@ -25,11 +26,25 @@ const ShortLinkSection = styled.div`
 `;
 
 export const ShortLink = ({ setShortLink, shortLink }) => {
+  const [formDate, setFormData] = useState({
+    originUrl: "",
+    tags: "",
+    shortUrl: "",
+    type: "",
+    title: "",
+    description: "",
+    url: "",
+    image: "",
+  });
   const originalUrlRef = useRef(undefined);
 
   const paste = async () => {
     const pasteWord = await navigator.clipboard.readText();
     originalUrlRef.current.value = pasteWord;
+  };
+
+  const createLink = () => {
+    console.log(formDate);
   };
 
   return (
@@ -47,6 +62,7 @@ export const ShortLink = ({ setShortLink, shortLink }) => {
                 placeholder="Original URL"
                 style={{ paddingRight: "2rem" }}
                 ref={originalUrlRef}
+                name="originUrl"
               />
               <MdContentPaste
                 style={{
@@ -69,19 +85,42 @@ export const ShortLink = ({ setShortLink, shortLink }) => {
               type="text"
               placeholder="TAG: #example #example2"
               mb="1rem"
+              name="tags"
             />
-            <Input type="text" placeholder="Short URL Name" />
+            <Input type="text" placeholder="Short URL Name" name="shortUrl" />
           </GroupCol>
 
           <GroupCol mb="2rem">
             <CardSubTitle>[CUSTOMIZE]</CardSubTitle>
-            <Input type="text" placeholder="OG" mb="1rem"></Input>
-            <Input type="text" placeholder="META" mb="1rem"></Input>
-            <Input type="text" placeholder="IMAGE" mb="1rem"></Input>
+            <Input type="text" placeholder="TYPE" mb="1rem" name="type"></Input>
+            <Input
+              type="text"
+              placeholder="TITLE"
+              mb="1rem"
+              name="title"
+            ></Input>
+            <Input
+              type="text"
+              placeholder="DESCRIPTION"
+              mb="1rem"
+              name="description"
+            ></Input>
+            <Input
+              type="text"
+              placeholder="Main URL"
+              mb="1rem"
+              name="url"
+            ></Input>
+            <Input
+              type="text"
+              placeholder="IMAGE"
+              mb="1rem"
+              name="image"
+            ></Input>
           </GroupCol>
 
           <Group justify="center" gap="2rem" mb="2rem">
-            <SubmitButton>CREATE</SubmitButton>
+            <SubmitButton onClick={createLink}>CREATE</SubmitButton>
             <CancelButton
               onClick={() => {
                 setShortLink(false);
