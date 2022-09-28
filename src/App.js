@@ -4,6 +4,7 @@ import { Home } from "./pages/Home";
 import { User } from "./pages/User";
 import { EditPassword } from "./pages/EditPassword";
 import { Profile } from "./pages/Profile";
+import { Analysis } from "./pages/Analysis";
 import React, { useReducer } from "react";
 
 export const ModelContext = React.createContext();
@@ -42,6 +43,7 @@ function App() {
             <Route index element={<User />} />
             <Route path="editPassword" element={<EditPassword />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="shortUrl/:id" element={<Analysis />} />
           </Route>
         </Routes>
       </main>

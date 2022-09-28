@@ -67,6 +67,7 @@ export const Header = () => {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("email");
   };
 
   return (
@@ -116,7 +117,6 @@ export const Header = () => {
         </nav>
       </HeaderSection>
 
-      <div style={{ paddingTop: "6rem" }}></div>
       <Outlet />
     </>
   );

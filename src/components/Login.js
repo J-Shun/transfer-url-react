@@ -5,8 +5,8 @@ import { SubmitButton } from "../shared/Button";
 import { useState, useContext } from "react";
 import { sendData } from "../api/api";
 import { Model } from "./Model";
-import { url, loginRoute } from "../api/routes";
 import { ModelContext } from "../App";
+import { url, loginRoute } from "../api/routes";
 import { isFill, isValidEmail } from "../utilities/checkForm";
 
 export const Login = ({ setCategory, setLoginForm }) => {

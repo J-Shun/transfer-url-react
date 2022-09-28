@@ -30,7 +30,6 @@ export const CardTitle = styled.h2`
 export const CardSubTitle = styled.h3`
   color: #fcee0a;
   font-size: 1.5rem;
-  margin-bottom: 0.5rem;
 `;
 
 export const CardText = styled.p`

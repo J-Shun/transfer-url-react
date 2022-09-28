@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-const url = "https://transport-url.herokuapp.com/";
 const token = localStorage.getItem("token");
 let headers = {
   "Content-Type": "application/json",
@@ -17,8 +16,17 @@ export const sendData = async (method, route, data) => {
   return result;
 };
 
+export const deleteData = async (method, route) => {
+  const rawData = await fetch(route, {
+    method: method.toUpperCase(),
+    headers,
+  });
+  const result = await rawData.json();
+  return result;
+};
+
 // get data
-export function useFetch(route) {
+export function useFetch(route, renderTrigger) {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState("");
   const [error, setError] = useState("");
@@ -35,7 +43,7 @@ export function useFetch(route) {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [route, renderTrigger]);
 
   return { data, error, isLoading };
 }

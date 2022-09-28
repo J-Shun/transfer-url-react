@@ -11,6 +11,7 @@ export const Card = styled.div`
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 1.5rem;
+  z-index: 1;
 
   &:hover {
     box-shadow: 4px 4px 0px #fff;

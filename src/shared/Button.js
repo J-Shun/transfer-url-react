@@ -46,16 +46,6 @@ export const CancelButton = styled(SubmitButton)`
   }
 `;
 
-export const CreateButton = styled(Button)`
-  display: flex;
-  align-items: center;
-  border: none;
-  background-color: transparent;
-  border: 1px solid #fcee0a;
-  color: #fcee0a;
-  margin-top: 3rem;
-`;
-
 export const SelectButton = styled(Button)`
   width: ${(props) => props.width || "100%"};
   color: #fff;
