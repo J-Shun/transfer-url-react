@@ -4,6 +4,9 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { clearToken } from "../utilities/clearToken";
+import { url, shortLinkRoute } from "../api/routes";
+import { Context } from "../App";
+import { useContext } from "react";
 
 const HeaderSection = styled.div`
   .header-bar {
@@ -60,6 +63,7 @@ const HeaderSection = styled.div`
 `;
 
 export const Header = () => {
+  const { setDataListUrl } = useContext(Context);
   const [showNav, setShowNav] = useState(false);
   const toggleNav = () => {
     setShowNav(!showNav);
@@ -73,6 +77,7 @@ export const Header = () => {
             <HeaderTitle
               onClick={() => {
                 setShowNav(false);
+                setDataListUrl(`${url + shortLinkRoute}?page=1`);
               }}
             >
               Transfer URL
@@ -83,7 +88,12 @@ export const Header = () => {
 
         <nav className="header-nav">
           <ul>
-            <li onClick={toggleNav}>
+            <li
+              onClick={() => {
+                toggleNav();
+                setDataListUrl(`${url + shortLinkRoute}?page=1`);
+              }}
+            >
               <Link to="/user" className="header-nav-link">
                 Data Management
               </Link>
