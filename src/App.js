@@ -5,7 +5,8 @@ import { User } from "./pages/User";
 import { EditPassword } from "./pages/EditPassword";
 import { Profile } from "./pages/Profile";
 import { Analysis } from "./pages/Analysis";
-import React, { useReducer } from "react";
+import React, { useState, useReducer } from "react";
+import { url, shortLinkRoute } from "./api/routes";
 
 export const Context = React.createContext();
 
@@ -34,8 +35,23 @@ function App() {
     message: "",
   });
 
+  const [renderTrigger, setRenderTrigger] = useState(true);
+
+  const [dataListUrl, setDataListUrl] = useState(
+    `${url + shortLinkRoute}?page=1`
+  );
+
   return (
-    <Context.Provider value={{ modelState, modelDispatch }}>
+    <Context.Provider
+      value={{
+        modelState,
+        modelDispatch,
+        renderTrigger,
+        setRenderTrigger,
+        dataListUrl,
+        setDataListUrl,
+      }}
+    >
       <main className="global-background">
         <Routes>
           <Route path="/" element={<Home />} />

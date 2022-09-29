@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { BsExclamationCircleFill } from "react-icons/bs";
 import { url, shortLinkRoute } from "../api/routes";
 import { deleteData } from "../api/api";
+import { Context } from "../App";
+import { useContext } from "react";
 
 const ModelSection = styled.div`
   width: 100vw;
@@ -103,17 +105,14 @@ const ModelSection = styled.div`
   }
 `;
 
-export const Confirm = ({
-  checkDelete,
-  setCheckDelete,
-  id,
-  renderTrigger,
-  setRenderTrigger,
-}) => {
+export const Confirm = ({ checkDelete, setCheckDelete, id }) => {
+  const { setDataListUrl, renderTrigger, setRenderTrigger } =
+    useContext(Context);
   const DeleteShortLink = async () => {
     const result = await deleteData("delete", url + shortLinkRoute + "/" + id);
     if (result.status === "success") {
       setRenderTrigger(!renderTrigger);
+      setDataListUrl(`${url + shortLinkRoute}?page=1`);
     }
   };
   return (

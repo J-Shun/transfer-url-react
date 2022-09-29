@@ -55,13 +55,9 @@ const ShortLinkSection = styled.div`
   }
 `;
 
-export const ShortLinkForm = ({
-  showForm,
-  setShowForm,
-  renderTrigger,
-  setRenderTrigger,
-}) => {
-  const { modelDispatch } = useContext(Context);
+export const ShortLinkForm = ({ showForm, setShowForm }) => {
+  const { modelDispatch, renderTrigger, setRenderTrigger, setDataListUrl } =
+    useContext(Context);
   const originalUrlRef = useRef(undefined);
   const [showCustomize, setShowCustomize] = useState(false);
   const [formData, setFormData] = useState({
@@ -103,6 +99,7 @@ export const ShortLinkForm = ({
     console.log(result);
     if (result.status === "success") {
       setRenderTrigger(!renderTrigger);
+      setDataListUrl(`${url + shortLinkRoute}?page=1`);
       setShowForm(false);
     }
   };

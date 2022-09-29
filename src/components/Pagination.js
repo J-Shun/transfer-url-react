@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { url, shortLinkRoute } from "../api/routes";
+import { useContext } from "react";
+import { Context } from "../App";
 
 const PageContainer = styled.ul`
   display: flex;
@@ -38,7 +40,8 @@ const Page = styled.li`
   }
 `;
 
-export const Pagination = ({ pageStatus, setDataListUrl }) => {
+export const Pagination = ({ pageStatus }) => {
+  const { setDataListUrl } = useContext(Context);
   const { currentPage, totalPage } = pageStatus;
   const pages = Array.from({ length: totalPage }, (_, i) => i + 1);
 

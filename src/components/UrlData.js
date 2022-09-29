@@ -11,11 +11,9 @@ import { RiFileDownloadLine } from "react-icons/ri";
 import { useState, useRef } from "react";
 import { Confirm } from "./Confirm";
 
-export const UrlData = ({ data, renderTrigger, setRenderTrigger }) => {
+export const UrlData = ({ data }) => {
   const [checkDelete, setCheckDelete] = useState(false);
   const shortUrlRef = useRef(undefined);
-
-  // console.log(data);
 
   const copyUrl = () => {
     navigator.clipboard.writeText(shortUrlRef.current.innerText);
@@ -69,8 +67,6 @@ export const UrlData = ({ data, renderTrigger, setRenderTrigger }) => {
         checkDelete={checkDelete}
         setCheckDelete={setCheckDelete}
         id={data._id}
-        renderTrigger={renderTrigger}
-        setRenderTrigger={setRenderTrigger}
       />
     </>
   );

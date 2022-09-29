@@ -3,8 +3,8 @@ import { Group } from "../shared/Group";
 import { ShortLinkForm } from "../components/ShortLinkForm";
 import { UrlData } from "../components/UrlData";
 import { Container } from "../shared/Container";
-import { useState } from "react";
-import { url, shortLinkRoute } from "../api/routes";
+import { useState, useContext } from "react";
+import { Context } from "../App";
 import { useFetch } from "../api/api";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import "../assets/icon.css";
@@ -13,12 +13,11 @@ import { Pagination } from "../components/Pagination";
 
 export const User = () => {
   const [showForm, setShowForm] = useState(false);
-  const [renderTrigger, setRenderTrigger] = useState(true);
-  const [dataListUrl, setDataListUrl] = useState(
-    `${url + shortLinkRoute}?page=1`
-  );
+
+  const { dataListUrl, renderTrigger } = useContext(Context);
 
   const { data, isLoading } = useFetch(dataListUrl, renderTrigger);
+
   const shortLinkList = data?.pages?.results;
   const pageStatus = {
     currentPage: data?.pages?.page,
@@ -47,28 +46,13 @@ export const User = () => {
             }}
           />
 
-          <br />
-          <br />
-
           {shortLinkList.map((linkData) => {
-            return (
-              <UrlData
-                key={linkData._id}
-                data={linkData}
-                renderTrigger={renderTrigger}
-                setRenderTrigger={setRenderTrigger}
-              />
-            );
+            return <UrlData key={linkData._id} data={linkData} />;
           })}
 
-          <Pagination pageStatus={pageStatus} setDataListUrl={setDataListUrl} />
+          <Pagination pageStatus={pageStatus} />
         </Container>
-        <ShortLinkForm
-          showForm={showForm}
-          setShowForm={setShowForm}
-          renderTrigger={renderTrigger}
-          setRenderTrigger={setRenderTrigger}
-        />
+        <ShortLinkForm showForm={showForm} setShowForm={setShowForm} />
       </>
     );
   }
