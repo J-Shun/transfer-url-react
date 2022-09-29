@@ -7,8 +7,8 @@ import { CardTitle, CardSubTitle } from "../shared/Text";
 import { Card } from "../shared/Card";
 import { MdContentPaste } from "react-icons/md";
 import { useState, useContext } from "react";
-import { sendData } from "../api/api";
-import { url, shortLinkRoute } from "../api/routes";
+import { sendData, uploadImage } from "../api/api";
+import { url, shortLinkRoute, uploadImageRoute } from "../api/routes";
 import styled from "styled-components";
 import { BsChevronDoubleDown } from "react-icons/bs";
 import { Model } from "./Model";
@@ -67,8 +67,8 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
     type: "",
     title: "",
     description: "",
-    url: "",
     image: "",
+    url: "",
   });
 
   const paste = async () => {
@@ -81,6 +81,13 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const submitUpload = async (e) => {
+    const formData = new FormData();
+    formData.append("file", e.target.files[0]);
+    const result = await uploadImage("post", url + uploadImageRoute, formData);
+    console.log(result);
+  };
+
   const isFormPass = () => {
     if (!isFill(formData.originUrl)) {
       modelDispatch({
@@ -89,6 +96,28 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
         message: "require url",
       });
       return false;
+    } else if (
+      isFill(formData.type) ||
+      isFill(formData.title) ||
+      isFill(formData.description) ||
+      isFill(formData.url) ||
+      isFill(formData.image)
+    ) {
+      if (!isFill(formData.title)) {
+        modelDispatch({
+          type: "show",
+          status: "error",
+          message: "og require title",
+        });
+        return false;
+      } else if (!isFill(formData.description)) {
+        modelDispatch({
+          type: "show",
+          status: "error",
+          message: "og require description",
+        });
+        return true;
+      }
     }
     return true;
   };
@@ -101,112 +130,121 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
       setRenderTrigger(!renderTrigger);
       setDataListUrl(`${url + shortLinkRoute}?page=1`);
       setShowForm(false);
+    } else if (result.message === "短網址已存在") {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "url name already taken",
+      });
+      return false;
     }
   };
 
   return (
-    <ShortLinkSection showForm={showForm} showCustomize={showCustomize}>
-      <Container>
-        <Card maxWidth="500px" mt="4rem" py="0">
-          <CardTitle bgColor="#000" translateY="translateY(-50%)">
-            CREATE NEW URL
-          </CardTitle>
-          <GroupCol mb="2rem">
-            <CardSubTitle>[REQUIRED]</CardSubTitle>
-            <Group items="center">
-              <Input
-                type="text"
-                placeholder="Original URL"
-                style={{ paddingRight: "2rem" }}
-                ref={originalUrlRef}
-                name="originUrl"
-                value={formData.originUrl}
-                onChange={handleForm}
-              />
-              <MdContentPaste className="paste-icon" onClick={paste} />
-            </Group>
-          </GroupCol>
+    <>
+      <ShortLinkSection showForm={showForm} showCustomize={showCustomize}>
+        <Container>
+          <Card maxWidth="500px" mt="4rem" py="0">
+            <CardTitle bgColor="#000" translateY="translateY(-50%)">
+              CREATE NEW URL
+            </CardTitle>
+            <GroupCol mb="2rem">
+              <CardSubTitle>[REQUIRED]</CardSubTitle>
+              <Group items="center">
+                <Input
+                  type="text"
+                  placeholder="Original URL"
+                  style={{ paddingRight: "2rem" }}
+                  ref={originalUrlRef}
+                  name="originUrl"
+                  value={formData.originUrl}
+                  onChange={handleForm}
+                />
+                <MdContentPaste className="paste-icon" onClick={paste} />
+              </Group>
+            </GroupCol>
 
-          <GroupCol mb="2rem">
-            <CardSubTitle>[OPTIONAL]</CardSubTitle>
-            <Input
-              type="text"
-              placeholder="TAG: #example #example2"
-              mb="1rem"
-              name="tags"
-              onChange={handleForm}
-            />
-            <Input
-              type="text"
-              placeholder="Short URL Name"
-              name="shortUrl"
-              onChange={handleForm}
-            />
-          </GroupCol>
-
-          <GroupCol mb="2rem">
-            <Group justify="space-between" items="center">
-              <CardSubTitle>[OG : CUSTOMIZE]</CardSubTitle>
-              <BsChevronDoubleDown
-                className="arrow-icon"
-                onClick={() => {
-                  setShowCustomize(!showCustomize);
-                }}
-              />
-            </Group>
-            <GroupCol className="customize-section">
+            <GroupCol mb="2rem">
+              <CardSubTitle>[OPTIONAL]</CardSubTitle>
               <Input
                 type="text"
-                placeholder="TYPE"
+                placeholder="Tag: #example #example2"
                 mb="1rem"
-                name="type"
+                name="tags"
                 onChange={handleForm}
               />
               <Input
                 type="text"
-                placeholder="TITLE"
-                mb="1rem"
-                name="title"
-                onChange={handleForm}
-              />
-              <Input
-                type="text"
-                placeholder="DESCRIPTION"
-                mb="1rem"
-                name="description"
-                onChange={handleForm}
-              />
-              <Input
-                type="text"
-                placeholder="Main URL"
-                mb="1rem"
-                name="url"
-                onChange={handleForm}
-              />
-              <Input
-                type="text"
-                placeholder="IMAGE"
-                mb="1rem"
-                name="image"
+                placeholder="Short URL Name"
+                name="shortUrl"
                 onChange={handleForm}
               />
             </GroupCol>
-          </GroupCol>
 
-          <Group justify="center" gap="2rem" mb="2rem">
-            <SubmitButton onClick={createLink}>CREATE</SubmitButton>
-            <CancelButton
-              onClick={() => {
-                setShowForm(false);
-                setShowCustomize(false);
-              }}
-            >
-              CANCEL
-            </CancelButton>
-          </Group>
-        </Card>
-      </Container>
+            <GroupCol mb="2rem">
+              <Group justify="space-between" items="center">
+                <CardSubTitle>[OG : CUSTOMIZE]</CardSubTitle>
+                <BsChevronDoubleDown
+                  className="arrow-icon"
+                  onClick={() => {
+                    setShowCustomize(!showCustomize);
+                  }}
+                />
+              </Group>
+              <GroupCol className="customize-section">
+                <Input
+                  type="text"
+                  placeholder="Title (REQUIRE)"
+                  mb="1rem"
+                  name="title"
+                  onChange={handleForm}
+                />
+                <Input
+                  type="text"
+                  placeholder="Description (REQUIRE)"
+                  mb="1rem"
+                  name="description"
+                  onChange={handleForm}
+                />
+                <Input
+                  type="text"
+                  placeholder="Type"
+                  mb="1rem"
+                  name="type"
+                  onChange={handleForm}
+                />
+                <Input
+                  type="text"
+                  placeholder="Main URL"
+                  mb="1rem"
+                  name="url"
+                  onChange={handleForm}
+                />
+                <Input
+                  type="file"
+                  placeholder="Image"
+                  mb="1rem"
+                  name="image"
+                  onChange={submitUpload}
+                />
+              </GroupCol>
+            </GroupCol>
+
+            <Group justify="center" gap="2rem" mb="2rem">
+              <SubmitButton onClick={createLink}>CREATE</SubmitButton>
+              <CancelButton
+                onClick={() => {
+                  setShowForm(false);
+                  setShowCustomize(false);
+                }}
+              >
+                CANCEL
+              </CancelButton>
+            </Group>
+          </Card>
+        </Container>
+      </ShortLinkSection>
       <Model />
-    </ShortLinkSection>
+    </>
   );
 };

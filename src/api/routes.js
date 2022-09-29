@@ -6,3 +6,4 @@ export const resetPasswordRoute = "user/reset_password";
 export const updateFileRoute = "user/update_profile";
 export const editPasswordRoute = "user/update_password";
 export const shortLinkRoute = "user/shortUrl";
+export const uploadImageRoute = "upload";

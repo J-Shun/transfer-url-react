@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  position: relative;
   max-width: 100%;
   padding: 0 15px;
   margin-left: auto;

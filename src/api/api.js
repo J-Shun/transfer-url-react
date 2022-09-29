@@ -51,3 +51,16 @@ export function useFetch(route, renderTrigger) {
 
   return { data, error, isLoading };
 }
+
+// upload image
+export const uploadImage = async (method, route, data) => {
+  const rawData = await fetch(route, {
+    method: method.toUpperCase(),
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: data,
+  });
+  const result = await rawData.json();
+  return result;
+};
