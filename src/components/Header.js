@@ -3,6 +3,7 @@ import { HeaderTitle } from "../shared/Text";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
+import { clearToken } from "../utilities/clearToken";
 
 const HeaderSection = styled.div`
   .header-bar {
@@ -64,12 +65,6 @@ export const Header = () => {
     setShowNav(!showNav);
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("email");
-  };
-
   return (
     <>
       <HeaderSection showNav={showNav}>
@@ -106,7 +101,7 @@ export const Header = () => {
             <li
               onClick={() => {
                 toggleNav();
-                logout();
+                clearToken();
               }}
             >
               <Link to="/" className="header-nav-link">

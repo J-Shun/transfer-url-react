@@ -34,7 +34,6 @@ export const Home = () => {
   });
 
   const { data, isLoading } = useFetch(url + checkTokenRoute);
-  console.log(data);
   if (data.status === "success") {
     return <Navigate to="/user" />;
   }

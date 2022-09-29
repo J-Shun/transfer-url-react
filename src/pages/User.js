@@ -1,23 +1,29 @@
-import { Input } from "../shared/Input";
 import { Button } from "../shared/Button";
 import { Group } from "../shared/Group";
 import { ShortLinkForm } from "../components/ShortLinkForm";
 import { UrlData } from "../components/UrlData";
 import { Container } from "../shared/Container";
 import { useState } from "react";
-import { BsSearch } from "react-icons/bs";
-import { url, getShortLinkList } from "../api/routes";
+import { url, shortLinkRoute } from "../api/routes";
 import { useFetch } from "../api/api";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import "../assets/icon.css";
 import { JellyTriangle } from "@uiball/loaders";
+import { Pagination } from "../components/Pagination";
 
 export const User = () => {
   const [shortLink, setShortLink] = useState(false);
   const [renderTrigger, setRenderTrigger] = useState(true);
+  const [dataListUrl, setDataListUrl] = useState(
+    `${url + shortLinkRoute}?page=1`
+  );
 
-  const { data, isLoading } = useFetch(url + getShortLinkList, renderTrigger);
+  const { data, isLoading } = useFetch(dataListUrl, renderTrigger);
   const shortLinkList = data?.pages?.results;
+  const pageStatus = {
+    currentPage: data?.pages?.page,
+    totalPage: data?.pages?.totalPages,
+  };
 
   if (isLoading) {
     return (
@@ -32,12 +38,6 @@ export const User = () => {
           <div style={{ marginTop: "4rem" }}></div>
           <Group justify="space-between" mb="2rem">
             <Button>Sort By</Button>
-            <Button>SHOW PAGE</Button>
-          </Group>
-
-          <Group items="center">
-            <Input type="text" placeholder="Enter tags or short url" />
-            <BsSearch className="search-icon" />
           </Group>
 
           <BsFillPlusCircleFill
@@ -61,13 +61,7 @@ export const User = () => {
             );
           })}
 
-          <ul style={{ paddingBottom: "3rem", display: "flex", color: "#fff" }}>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-          </ul>
+          <Pagination pageStatus={pageStatus} setDataListUrl={setDataListUrl} />
         </Container>
         <ShortLinkForm
           setShortLink={setShortLink}

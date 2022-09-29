@@ -8,8 +8,11 @@ import { url, signUpRoute } from "../api/routes";
 import { Model } from "./Model";
 import { ModelContext } from "../App";
 import { isFill, isValidEmail, isValidPassword } from "../utilities/checkForm";
+import { useNavigate } from "react-router-dom";
+import { saveToken } from "../utilities/saveToken";
 
 export const Register = () => {
+  const navigate = useNavigate();
   const { modelDispatch } = useContext(ModelContext);
   const [register, setRegister] = useState({
     name: "",
@@ -92,14 +95,13 @@ export const Register = () => {
 
     const result = await sendData("post", url + signUpRoute, register);
     if (result.token) {
-      localStorage.setItem("token", result.token);
-      localStorage.setItem("user", result.name);
-      localStorage.setItem("email", result.email);
+      saveToken(result);
       modelDispatch({
         type: "show",
         status: "success",
         message: "account created",
       });
+      navigate("/user");
     } else {
       modelDispatch({
         type: "show",

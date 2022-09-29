@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { BsExclamationCircleFill } from "react-icons/bs";
-import { url, getShortLinkList } from "../api/routes";
+import { url, shortLinkRoute } from "../api/routes";
 import { deleteData } from "../api/api";
 
 const ModelSection = styled.div`
@@ -111,7 +111,7 @@ export const Confirm = ({
   setRenderTrigger,
 }) => {
   const DeleteShortLink = async () => {
-    const result = await deleteData("delete", url + getShortLinkList + id);
+    const result = await deleteData("delete", url + shortLinkRoute + "/" + id);
     if (result.status === "success") {
       setRenderTrigger(!renderTrigger);
     }

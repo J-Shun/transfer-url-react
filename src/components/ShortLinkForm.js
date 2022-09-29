@@ -8,7 +8,7 @@ import { Card } from "../shared/Card";
 import { MdContentPaste } from "react-icons/md";
 import { useState, useContext } from "react";
 import { sendData } from "../api/api";
-import { url, createShortLinkRoute } from "../api/routes";
+import { url, shortLinkRoute } from "../api/routes";
 import styled from "styled-components";
 import { BsChevronDoubleDown } from "react-icons/bs";
 import { Model } from "./Model";
@@ -51,9 +51,7 @@ const ShortLinkSection = styled.div`
     transition: 0.3s;
     transform: translateY(${(props) => props.showCustomize || "-100%"});
     z-index: ${(props) => props.showCustomize || "-1"};
-    opacity: ${(props) => props.showCustomize || "0"};
     height: ${(props) => props.showCustomize || "0"};
-    pointer-events: ${(props) => props.showCustomize || "none"};
   }
 `;
 
@@ -101,7 +99,7 @@ export const ShortLinkForm = ({
 
   const createLink = async () => {
     if (!isFormPass()) return;
-    const result = await sendData("post", url + createShortLinkRoute, formData);
+    const result = await sendData("post", url + shortLinkRoute, formData);
     console.log(result);
     if (result.status === "success") {
       setRenderTrigger(!renderTrigger);

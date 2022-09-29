@@ -15,7 +15,7 @@ export const UrlData = ({ data, renderTrigger, setRenderTrigger }) => {
   const [checkDelete, setCheckDelete] = useState(false);
   const shortUrlRef = useRef(undefined);
 
-  console.log(data);
+  // console.log(data);
 
   const copyUrl = () => {
     navigator.clipboard.writeText(shortUrlRef.current.innerText);

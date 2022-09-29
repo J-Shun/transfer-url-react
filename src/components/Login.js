@@ -8,8 +8,10 @@ import { Model } from "./Model";
 import { ModelContext } from "../App";
 import { url, loginRoute } from "../api/routes";
 import { isFill, isValidEmail } from "../utilities/checkForm";
+import { useNavigate } from "react-router-dom";
 
 export const Login = ({ setCategory, setLoginForm }) => {
+  const navigate = useNavigate();
   const { modelDispatch } = useContext(ModelContext);
   const [login, setLogin] = useState({
     email: "",
@@ -56,7 +58,7 @@ export const Login = ({ setCategory, setLoginForm }) => {
       localStorage.setItem("token", result.token);
       localStorage.setItem("user", result.name);
       localStorage.setItem("email", result.email);
-      alert("loading page");
+      navigate("/user");
     } else if (result.message === "會員不存在") {
       modelDispatch({
         type: "show",

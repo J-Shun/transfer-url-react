@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
-const token = localStorage.getItem("token");
-let headers = {
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${token}`,
-};
 
 // POST, PATCH
 export const sendData = async (method, route, data) => {
   const rawData = await fetch(route, {
     method: method.toUpperCase(),
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
     body: JSON.stringify(data),
   });
   const result = await rawData.json();
@@ -19,7 +17,10 @@ export const sendData = async (method, route, data) => {
 export const deleteData = async (method, route) => {
   const rawData = await fetch(route, {
     method: method.toUpperCase(),
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
   const result = await rawData.json();
   return result;
@@ -35,7 +36,10 @@ export function useFetch(route, renderTrigger) {
     setIsLoading(true);
     fetch(route, {
       method: "GET",
-      headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     })
       .then((res) => res.json())
       .then((json) => setData(json))

@@ -62,7 +62,7 @@ export const Profile = () => {
           <CardTitle mb="2rem">Profile</CardTitle>
           <GroupCol mb="2rem">
             <CardSubTitle>[EMAIL]</CardSubTitle>
-            <Input value={localStorage.email}></Input>
+            <Input value={localStorage.email} disabled></Input>
           </GroupCol>
           <GroupCol mb="2rem">
             <CardSubTitle>[NAME]</CardSubTitle>
