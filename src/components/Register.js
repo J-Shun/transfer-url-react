@@ -6,14 +6,14 @@ import { useState, useContext } from "react";
 import { sendData } from "../api/api";
 import { url, signUpRoute } from "../api/routes";
 import { Model } from "./Model";
-import { ModelContext } from "../App";
+import { Context } from "../App";
 import { isFill, isValidEmail, isValidPassword } from "../utilities/checkForm";
 import { useNavigate } from "react-router-dom";
 import { saveToken } from "../utilities/saveToken";
 
 export const Register = () => {
   const navigate = useNavigate();
-  const { modelDispatch } = useContext(ModelContext);
+  const { modelDispatch } = useContext(Context);
   const [register, setRegister] = useState({
     name: "",
     email: "",

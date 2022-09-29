@@ -12,7 +12,7 @@ import { url, shortLinkRoute } from "../api/routes";
 import styled from "styled-components";
 import { BsChevronDoubleDown } from "react-icons/bs";
 import { Model } from "./Model";
-import { ModelContext } from "../App";
+import { Context } from "../App";
 import { isFill } from "../utilities/checkForm";
 
 const ShortLinkSection = styled.div`
@@ -28,7 +28,7 @@ const ShortLinkSection = styled.div`
   opacity: 0.9;
   transition: transform 0.5s;
   transform: ${(props) =>
-    props.shortLink ? "translateX(0)" : "translateX(-100%)"};
+    props.showForm ? "translateX(0)" : "translateX(-100%)"};
 
   .paste-icon {
     position: absolute;
@@ -56,12 +56,12 @@ const ShortLinkSection = styled.div`
 `;
 
 export const ShortLinkForm = ({
-  setShortLink,
-  shortLink,
+  showForm,
+  setShowForm,
   renderTrigger,
   setRenderTrigger,
 }) => {
-  const { modelDispatch } = useContext(ModelContext);
+  const { modelDispatch } = useContext(Context);
   const originalUrlRef = useRef(undefined);
   const [showCustomize, setShowCustomize] = useState(false);
   const [formData, setFormData] = useState({
@@ -103,12 +103,12 @@ export const ShortLinkForm = ({
     console.log(result);
     if (result.status === "success") {
       setRenderTrigger(!renderTrigger);
-      setShortLink(false);
+      setShowForm(false);
     }
   };
 
   return (
-    <ShortLinkSection shortLink={shortLink} showCustomize={showCustomize}>
+    <ShortLinkSection showForm={showForm} showCustomize={showCustomize}>
       <Container>
         <Card maxWidth="500px" mt="4rem" py="0">
           <CardTitle bgColor="#000" translateY="translateY(-50%)">
@@ -200,7 +200,7 @@ export const ShortLinkForm = ({
             <SubmitButton onClick={createLink}>CREATE</SubmitButton>
             <CancelButton
               onClick={() => {
-                setShortLink(false);
+                setShowForm(false);
                 setShowCustomize(false);
               }}
             >

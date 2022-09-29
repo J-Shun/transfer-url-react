@@ -8,11 +8,11 @@ import { useState, useContext } from "react";
 import { sendData } from "../api/api";
 import { url, updateFileRoute } from "../api/routes";
 import { Model } from "../components/Model";
-import { ModelContext } from "../App";
+import { Context } from "../App";
 import { isFill } from "../utilities/checkForm";
 
 export const Profile = () => {
-  const { modelDispatch } = useContext(ModelContext);
+  const { modelDispatch } = useContext(Context);
   const [profile, setProfile] = useState({
     name: localStorage.user,
   });

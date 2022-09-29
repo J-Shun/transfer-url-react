@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { BsExclamationCircleFill, BsFillCheckCircleFill } from "react-icons/bs";
 import { useContext } from "react";
-import { ModelContext } from "../App";
+import { Context } from "../App";
 
 const ModelSection = styled.div`
   width: 100vw;
@@ -106,7 +106,7 @@ const ModelSection = styled.div`
 `;
 
 export const Model = () => {
-  const { modelState, modelDispatch } = useContext(ModelContext);
+  const { modelState, modelDispatch } = useContext(Context);
   const confirm = (e) => {
     e.preventDefault();
     modelDispatch({ type: "hide" });

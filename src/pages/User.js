@@ -12,7 +12,7 @@ import { JellyTriangle } from "@uiball/loaders";
 import { Pagination } from "../components/Pagination";
 
 export const User = () => {
-  const [shortLink, setShortLink] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const [renderTrigger, setRenderTrigger] = useState(true);
   const [dataListUrl, setDataListUrl] = useState(
     `${url + shortLinkRoute}?page=1`
@@ -43,7 +43,7 @@ export const User = () => {
           <BsFillPlusCircleFill
             className="create-icon"
             onClick={() => {
-              setShortLink(true);
+              setShowForm(true);
             }}
           />
 
@@ -64,8 +64,8 @@ export const User = () => {
           <Pagination pageStatus={pageStatus} setDataListUrl={setDataListUrl} />
         </Container>
         <ShortLinkForm
-          setShortLink={setShortLink}
-          shortLink={shortLink}
+          showForm={showForm}
+          setShowForm={setShowForm}
           renderTrigger={renderTrigger}
           setRenderTrigger={setRenderTrigger}
         />

@@ -8,11 +8,11 @@ import { useState, useContext } from "react";
 import { sendData } from "../api/api";
 import { url, editPasswordRoute } from "../api/routes";
 import { Model } from "../components/Model";
-import { ModelContext } from "../App";
+import { Context } from "../App";
 import { isFill, isValidPassword } from "../utilities/checkForm";
 
 export const EditPassword = () => {
-  const { modelDispatch } = useContext(ModelContext);
+  const { modelDispatch } = useContext(Context);
   const [password, setPassword] = useState({
     password: "",
     confirmPassword: "",

@@ -5,14 +5,14 @@ import { SubmitButton } from "../shared/Button";
 import { useState, useContext } from "react";
 import { sendData } from "../api/api";
 import { Model } from "./Model";
-import { ModelContext } from "../App";
+import { Context } from "../App";
 import { url, loginRoute } from "../api/routes";
 import { isFill, isValidEmail } from "../utilities/checkForm";
 import { useNavigate } from "react-router-dom";
 
 export const Login = ({ setCategory, setLoginForm }) => {
   const navigate = useNavigate();
-  const { modelDispatch } = useContext(ModelContext);
+  const { modelDispatch } = useContext(Context);
   const [login, setLogin] = useState({
     email: "",
     password: "",

@@ -7,7 +7,7 @@ import { Profile } from "./pages/Profile";
 import { Analysis } from "./pages/Analysis";
 import React, { useReducer } from "react";
 
-export const ModelContext = React.createContext();
+export const Context = React.createContext();
 
 function App() {
   const modelReducer = (state, action) => {
@@ -35,7 +35,7 @@ function App() {
   });
 
   return (
-    <ModelContext.Provider value={{ modelState, modelDispatch }}>
+    <Context.Provider value={{ modelState, modelDispatch }}>
       <main className="global-background">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -47,7 +47,7 @@ function App() {
           </Route>
         </Routes>
       </main>
-    </ModelContext.Provider>
+    </Context.Provider>
   );
 }
 

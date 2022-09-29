@@ -7,11 +7,11 @@ import { useState, useContext } from "react";
 import { sendData } from "../api/api";
 import { url, resetPasswordRoute } from "../api/routes";
 import { Model } from "./Model";
-import { ModelContext } from "../App";
+import { Context } from "../App";
 import { isFill, isValidEmail, isValidPassword } from "../utilities/checkForm";
 
 export const ForgetPassword = ({ setCategory, setLoginForm }) => {
-  const { modelDispatch } = useContext(ModelContext);
+  const { modelDispatch } = useContext(Context);
   const [resetData, setResetData] = useState({
     email: "",
     safetyQuestion: "",
