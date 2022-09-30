@@ -63,7 +63,6 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
   const [formData, setFormData] = useState({
     originUrl: "",
     tags: "",
-    shortUrl: "",
     type: "",
     title: "",
     description: "",
@@ -131,7 +130,17 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
 
   const createLink = async () => {
     if (!isFormPass()) return;
-    const result = await sendData("post", url + shortLinkRoute, formData);
+
+    const cleanData = { ...formData };
+
+    for (const data in cleanData) {
+      if (!isFill(cleanData[data])) delete cleanData[data];
+    }
+
+    console.log(cleanData);
+
+    // return;
+    const result = await sendData("post", url + shortLinkRoute, cleanData);
     console.log(result);
     if (result.status === "success") {
       setRenderTrigger(!renderTrigger);
@@ -161,7 +170,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
                   placeholder="Original URL"
                   style={{ paddingRight: "2rem" }}
                   ref={originalUrlRef}
-                  name="originUrl"
+                  name=""
                   value={formData.originUrl}
                   onChange={handleForm}
                 />
@@ -176,12 +185,6 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
                 placeholder="Tag: #example #example2"
                 mb="1rem"
                 name="tags"
-                onChange={handleForm}
-              />
-              <Input
-                type="text"
-                placeholder="Short URL Name"
-                name="shortUrl"
                 onChange={handleForm}
               />
             </GroupCol>
