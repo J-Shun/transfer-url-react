@@ -57,8 +57,8 @@ export const Profile = () => {
 
   return (
     <>
-      <Container style={{ color: "#fff" }}>
-        <Card>
+      <Container>
+        <Card mt="8rem">
           <CardTitle mb="2rem">Profile</CardTitle>
           <GroupCol mb="2rem">
             <CardSubTitle>[EMAIL]</CardSubTitle>

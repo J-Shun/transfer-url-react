@@ -22,7 +22,6 @@ export const CardTitle = styled.h2`
   font-style: italic;
   text-align: center;
   background-color: ${(props) => props.bgColor};
-  padding: 0.25rem;
   margin-bottom: ${(props) => props.mb};
   transform: ${(props) => props.translateY};
 `;

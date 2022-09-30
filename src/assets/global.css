@@ -153,6 +153,7 @@ body {
   overflow: auto;
   background-attachment: fixed;
   background-color: #16191f;
+  /* background-image: linear-gradient(#680d56, #1a0844); */
 }
 
 a {

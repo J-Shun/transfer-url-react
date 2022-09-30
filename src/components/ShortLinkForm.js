@@ -14,6 +14,7 @@ import { BsChevronDoubleDown } from "react-icons/bs";
 import { Model } from "./Model";
 import { Context } from "../App";
 import { isFill } from "../utilities/checkForm";
+import validator from "validator";
 
 const ShortLinkSection = styled.div`
   position: absolute;
@@ -25,7 +26,6 @@ const ShortLinkSection = styled.div`
   z-index: 2;
   height: 100vh;
   background-color: #000;
-  opacity: 0.9;
   transition: transform 0.5s;
   transform: ${(props) =>
     props.showForm ? "translateX(0)" : "translateX(-100%)"};
@@ -89,11 +89,11 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
   };
 
   const isFormPass = () => {
-    if (!isFill(formData.originUrl)) {
+    if (!isFill(formData.originUrl) || !validator.isURL(formData.originUrl)) {
       modelDispatch({
         type: "show",
         status: "error",
-        message: "require url",
+        message: "invalid url",
       });
       return false;
     } else if (
@@ -116,7 +116,14 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
           status: "error",
           message: "og require description",
         });
-        return true;
+        return false;
+      } else if (isFill(formData.url) && !validator.isURL(formData.url)) {
+        modelDispatch({
+          type: "show",
+          status: "error",
+          message: "og invalid url",
+        });
+        return false;
       }
     }
     return true;
@@ -144,10 +151,8 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
     <>
       <ShortLinkSection showForm={showForm} showCustomize={showCustomize}>
         <Container>
-          <Card maxWidth="500px" mt="4rem" py="0">
-            <CardTitle bgColor="#000" translateY="translateY(-50%)">
-              CREATE NEW URL
-            </CardTitle>
+          <Card maxWidth="500px" mt="4rem" py="2rem">
+            <CardTitle mb="2rem">CREATE NEW URL</CardTitle>
             <GroupCol mb="2rem">
               <CardSubTitle>[REQUIRED]</CardSubTitle>
               <Group items="center">
@@ -230,7 +235,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
               </GroupCol>
             </GroupCol>
 
-            <Group justify="center" gap="2rem" mb="2rem">
+            <Group justify="center" gap="1.75rem">
               <SubmitButton onClick={createLink}>CREATE</SubmitButton>
               <CancelButton
                 onClick={() => {

@@ -34,7 +34,7 @@ export const User = () => {
     return (
       <>
         <Container>
-          <div style={{ marginTop: "4rem" }}></div>
+          <div style={{ marginTop: "6rem" }}></div>
           <Group justify="space-between" mb="2rem">
             <Button>Sort By</Button>
           </Group>

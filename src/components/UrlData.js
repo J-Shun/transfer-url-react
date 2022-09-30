@@ -1,6 +1,6 @@
 import { Card } from "../shared/Card";
 import { Group, GroupCol } from "../shared/Group";
-import { BsClipboardData } from "react-icons/bs";
+import { BsClipboardData, BsChevronDoubleDown } from "react-icons/bs";
 import { RiDeleteBack2Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { CardSubTitle, Tag } from "../shared/Text";
@@ -10,6 +10,9 @@ import "../assets/icon.css";
 import { RiFileDownloadLine } from "react-icons/ri";
 import { useState, useRef } from "react";
 import { Confirm } from "./Confirm";
+
+import styled from "styled-components";
+const Test = styled.div``;
 
 export const UrlData = ({ data }) => {
   const [checkDelete, setCheckDelete] = useState(false);
@@ -61,7 +64,13 @@ export const UrlData = ({ data }) => {
           <CardSubTitle>[No Repeat Visitors]</CardSubTitle>
           <p>{data.nonDupClicks}</p>
         </GroupCol>
+        <BsChevronDoubleDown className="detail-icon" />
       </Card>
+
+      <Test>
+        <CardSubTitle>[No Repeat Visitors]</CardSubTitle>
+        <Card></Card>
+      </Test>
 
       <Confirm
         checkDelete={checkDelete}
