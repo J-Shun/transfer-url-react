@@ -15,6 +15,7 @@ import { Model } from "./Model";
 import { Context } from "../App";
 import { isFill } from "../utilities/checkForm";
 import validator from "validator";
+import { clear } from "@testing-library/user-event/dist/clear";
 
 const ShortLinkSection = styled.div`
   position: absolute;
@@ -80,10 +81,25 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const validImage = (file) => {
+    if (!file.type.startsWith("image")) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "not image file",
+      });
+      return false;
+    }
+  };
+
   const submitUpload = async (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    if (!validImage(file)) return;
     const formData = new FormData();
-    formData.append("file", e.target.files[0]);
+    formData.append("file", file);
     const result = await uploadImage("post", url + uploadImageRoute, formData);
+    setFormData({ ...formData, url: result.imgUrl });
     console.log(result);
   };
 
@@ -128,18 +144,26 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
     return true;
   };
 
+  const rebuildForm = (data) => {
+    const cleanData = { originUrl: data.originUrl };
+    const og = {};
+    if (isFill(formData.title) || isFill(formData.description)) {
+      og.title = data.title.trim();
+      og.description = data.description.trim();
+      if (isFill(formData.type)) og.type = data.type.trim();
+      if (isFill(formData.url)) og.url = data.url;
+      if (isFill(formData.image)) og.url = data.image;
+      cleanData.og = og;
+    }
+    return cleanData;
+  };
+
   const createLink = async () => {
     if (!isFormPass()) return;
-
-    const cleanData = { ...formData };
-
-    for (const data in cleanData) {
-      if (!isFill(cleanData[data])) delete cleanData[data];
-    }
-
+    const cleanData = rebuildForm(formData);
     console.log(cleanData);
 
-    // return;
+    return;
     const result = await sendData("post", url + shortLinkRoute, cleanData);
     console.log(result);
     if (result.status === "success") {
@@ -170,7 +194,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
                   placeholder="Original URL"
                   style={{ paddingRight: "2rem" }}
                   ref={originalUrlRef}
-                  name=""
+                  name="originUrl"
                   value={formData.originUrl}
                   onChange={handleForm}
                 />
@@ -185,6 +209,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
                 placeholder="Tag: #example #example2"
                 mb="1rem"
                 name="tags"
+                value={formData.tags}
                 onChange={handleForm}
               />
             </GroupCol>
