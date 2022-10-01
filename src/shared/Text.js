@@ -54,15 +54,3 @@ export const Help = styled.span`
     color: #fcee0a;
   }
 `;
-
-export const Tag = styled.span`
-  font-size: 1rem;
-  background-color: #287bff;
-  margin: 0.25rem;
-  padding: 0.25rem 0.5rem;
-
-  &:hover {
-    background-color: #e23832;
-    cursor: pointer;
-  }
-`;

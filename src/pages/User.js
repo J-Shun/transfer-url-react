@@ -1,4 +1,3 @@
-import { Button } from "../shared/Button";
 import { Group } from "../shared/Group";
 import { ShortLinkForm } from "../components/ShortLinkForm";
 import { UrlData } from "../components/UrlData";
@@ -38,8 +37,8 @@ export const User = () => {
     return (
       <>
         <Container>
-          <div style={{ marginTop: "6rem" }}></div>
-          <Group justify="space-between" mb="2rem">
+          <div style={{ marginTop: "8rem" }}></div>
+          <Group justify="space-between" mb="4rem">
             <Select width={"200px"}>
               <Option>Created Time</Option>
               <Option>Clicks</Option>

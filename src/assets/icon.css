@@ -32,7 +32,8 @@
 }
 
 .copy-icon {
-  font-size: 1.25rem;
+  color: #fcee0a;
+  font-size: 1.75rem;
   cursor: pointer;
 }
 
@@ -41,17 +42,6 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-}
-
-.detail-icon {
-  position: absolute;
-  width: 2rem;
-  height: 2rem;
-  padding: 0.25rem;
-  bottom: 0.25rem;
-  left: 50%;
-  transform: translateX(-50%);
-  cursor: pointer;
 }
 
 .done-icon {

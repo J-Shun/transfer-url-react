@@ -8,6 +8,7 @@ export const Group = styled.div`
   align-items: ${(props) => props.items};
   gap: ${(props) => props.gap};
   margin-bottom: ${(props) => props.mb};
+  margin-top: ${(props) => props.mt};
   overflow: hidden;
 `;
 
