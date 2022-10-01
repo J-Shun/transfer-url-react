@@ -1,26 +1,21 @@
-import { useRef } from "react";
 import { Label, Input, Select, Option } from "../shared/Input";
 import { SubmitButton, CancelButton } from "../shared/Button";
 import { Group, GroupCol } from "../shared/Group";
 import { Container } from "../shared/Container";
-import { CardTitle, CardSubTitle } from "../shared/Text";
+import { CardTitle } from "../shared/Text";
 import { Card } from "../shared/Card";
-import { MdContentPaste } from "react-icons/md";
 import { useState, useContext } from "react";
 import { sendData, uploadImage } from "../api/api";
 import { url, shortLinkRoute, uploadImageRoute } from "../api/routes";
+import { TiDeleteOutline } from "react-icons/ti";
 import styled from "styled-components";
-import { BsChevronDoubleDown } from "react-icons/bs";
-import { Model } from "./Model";
 import { Context } from "../App";
 import { isFill } from "../utilities/checkForm";
-import { toArray } from "../utilities/toArray";
 import validator from "validator";
-import { TiDeleteOutline } from "react-icons/ti";
 import "../assets/icon.css";
 
-const ShortLinkSection = styled.div`
-  position: absolute;
+const OgSection = styled.div`
+  position: fixed;
   overflow: auto;
   top: 0;
   right: 0;
@@ -32,52 +27,28 @@ const ShortLinkSection = styled.div`
   transition: transform 0.5s;
   transform: ${(props) =>
     props.showForm ? "translateX(0)" : "translateX(-100%)"};
-
-  .paste-icon {
-    position: absolute;
-    right: 0;
-    margin: 0 0.5rem;
-    font-size: 22px;
-    cursor: pointer;
-    color: #fff;
-  }
-
-  .arrow-icon {
-    margin: 0 0.5rem;
-    font-size: 22px;
-    transform: rotate(${(props) => props.showCustomize && "180deg"});
-    transition: 0.3s;
-    cursor: pointer;
-  }
-
-  .customize-section {
-    transition: 0.3s;
-    transform: translateY(${(props) => props.showCustomize || "-100%"});
-    z-index: ${(props) => props.showCustomize || "-1"};
-    height: ${(props) => props.showCustomize || "0"};
-  }
 `;
 
-export const ShortLinkForm = ({ showForm, setShowForm }) => {
+export const Og = ({ showOgForm, setShowOgForm, og, id }) => {
   const { modelDispatch, renderTrigger, setRenderTrigger, setDataListUrl } =
     useContext(Context);
-  const originalUrlRef = useRef(undefined);
-  const [showCustomize, setShowCustomize] = useState(false);
-  const [image, setImage] = useState("");
-  const [imageName, setImageName] = useState("");
-  const [formData, setFormData] = useState({
-    originUrl: "",
-    tags: "",
+  const ogPrototype = {
     type: "",
     title: "",
     description: "",
     url: "",
-  });
-
-  const paste = async () => {
-    const pasteWord = await navigator.clipboard.readText();
-    setFormData({ ...formData, originUrl: pasteWord });
   };
+  if (og?.type) ogPrototype.type = og.type;
+  if (og?.title) ogPrototype.title = og.title;
+  if (og?.description) ogPrototype.description = og.description;
+  if (og?.url) ogPrototype.url = og.url;
+
+  let imagePrototype = "";
+  if (og?.image) imagePrototype = og.image;
+  const [image, setImage] = useState(imagePrototype);
+  const [imageName, setImageName] = useState(imagePrototype);
+
+  const [formData, setFormData] = useState(ogPrototype);
 
   const handleForm = (e) => {
     const { name, value } = e.target;
@@ -132,80 +103,59 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
     setImage("");
   };
 
-  const isFormPass = () => {
-    if (!isFill(formData.originUrl) || !validator.isURL(formData.originUrl)) {
+  const isForm = () => {
+    if (!isFill(formData.title)) {
       modelDispatch({
         type: "show",
         status: "error",
-        message: "invalid url",
+        message: "og require title",
       });
       return false;
-    } else if (
-      isFill(formData.type) ||
-      isFill(formData.title) ||
-      isFill(formData.description) ||
-      isFill(formData.url) ||
-      isFill(image)
-    ) {
-      if (!isFill(formData.title)) {
-        modelDispatch({
-          type: "show",
-          status: "error",
-          message: "og require title",
-        });
-        return false;
-      } else if (!isFill(formData.description)) {
-        modelDispatch({
-          type: "show",
-          status: "error",
-          message: "og require description",
-        });
-        return false;
-      } else if (isFill(formData.url) && !validator.isURL(formData.url)) {
-        modelDispatch({
-          type: "show",
-          status: "error",
-          message: "og invalid url",
-        });
-        return false;
-      }
+    } else if (!isFill(formData.description)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "og require description",
+      });
+      return false;
+    } else if (isFill(formData.url) && !validator.isURL(formData.url)) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "og invalid url",
+      });
+      return false;
     }
     return true;
   };
 
   const rebuildForm = (data) => {
-    const cleanData = { originUrl: data.originUrl };
-    const og = {};
-    if (isFill(formData.title) || isFill(formData.description)) {
-      og.title = data.title.trim();
-      og.description = data.description.trim();
-      if (isFill(formData.type)) og.type = data.type;
-      if (isFill(formData.url)) og.url = data.url;
-      if (isFill(image)) og.image = image;
-      cleanData.og = og;
-    }
-    if (isFill(formData.tags)) {
-      const tags = toArray(formData.tags);
-      cleanData.tags = tags;
-    }
+    const cleanData = {};
+    cleanData.title = data.title.trim();
+    cleanData.description = data.description.trim();
+    if (isFill(formData.type)) cleanData.type = data.type;
+    if (isFill(formData.url)) cleanData.url = data.url;
+    if (isFill(image)) cleanData.image = image;
     return cleanData;
   };
 
-  const createLink = async () => {
-    if (!isFormPass()) return;
+  const editOg = async () => {
+    if (!isForm()) return;
     const cleanData = rebuildForm(formData);
-
-    const result = await sendData("post", url + shortLinkRoute, cleanData);
-    console.log(result);
+    const result = await sendData(
+      "post",
+      `${url + shortLinkRoute}/${id}/og`,
+      cleanData
+    );
     if (result.status === "success") {
       setRenderTrigger(!renderTrigger);
       setDataListUrl(`${url + shortLinkRoute}?page=1`);
-      setShowForm(false);
-    } else if (result.message === "短網址已存在") {
+      setShowOgForm(false);
+    } else {
       modelDispatch({
         type: "show",
         status: "error",
-        message: "url name already taken",
+        message: "system error",
       });
       return false;
     }
@@ -213,51 +163,19 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
 
   return (
     <>
-      <ShortLinkSection showForm={showForm} showCustomize={showCustomize}>
+      <OgSection showForm={showOgForm}>
         <Container>
           <Card maxWidth="500px" mt="4rem" py="2rem">
-            <CardTitle mb="2rem">CREATE NEW URL</CardTitle>
-            <GroupCol mb="2rem">
-              <CardSubTitle>REQUIRED</CardSubTitle>
-              <Group items="center">
-                <Input
-                  type="text"
-                  placeholder="Original URL"
-                  style={{ paddingRight: "2rem" }}
-                  ref={originalUrlRef}
-                  name="originUrl"
-                  value={formData.originUrl}
-                  onChange={handleForm}
-                />
-                <MdContentPaste className="paste-icon" onClick={paste} />
-              </Group>
-            </GroupCol>
+            <CardTitle mb="2rem">Og Edit</CardTitle>
 
             <GroupCol mb="2rem">
-              <CardSubTitle>OPTIONAL</CardSubTitle>
-              <Input
-                type="text"
-                placeholder="Tag: tag1 tag2"
-                mb="1rem"
-                name="tags"
-                value={formData.tags}
-                onChange={handleForm}
-              />
-            </GroupCol>
-
-            <GroupCol mb="2rem">
-              <Group justify="space-between" items="center">
-                <CardSubTitle>OG : CUSTOMIZE</CardSubTitle>
-                <BsChevronDoubleDown
-                  className="arrow-icon"
-                  onClick={() => {
-                    setShowCustomize(!showCustomize);
-                  }}
-                />
-              </Group>
               <GroupCol className="customize-section">
                 <GroupCol mb="1rem">
-                  <Select name="type" onChange={handleForm}>
+                  <Select
+                    name="type"
+                    onChange={handleForm}
+                    value={formData.type}
+                  >
                     <Option value="">Website (default)</Option>
                     <Option value="article">Article</Option>
                     <Option value="book">Book</Option>
@@ -309,11 +227,10 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
             </GroupCol>
 
             <Group justify="center" gap="1.75rem">
-              <SubmitButton onClick={createLink}>CREATE</SubmitButton>
+              <SubmitButton onClick={editOg}>CREATE</SubmitButton>
               <CancelButton
                 onClick={() => {
-                  setShowForm(false);
-                  setShowCustomize(false);
+                  setShowOgForm(false);
                 }}
               >
                 CANCEL
@@ -321,8 +238,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
             </Group>
           </Card>
         </Container>
-      </ShortLinkSection>
-      <Model />
+      </OgSection>
     </>
   );
 };

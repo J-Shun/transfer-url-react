@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const HomeTitle = styled.h1`
   font-size: 3rem;
+  font-weight: bold;
   text-align: center;
   color: #fcee0a;
   padding: 3rem 0;
@@ -27,7 +28,7 @@ export const CardTitle = styled.h2`
 `;
 
 export const CardSubTitle = styled.h3`
-  color: #fcee0a;
+  color: #fff;
   font-size: 1.5rem;
 `;
 
@@ -55,7 +56,7 @@ export const Help = styled.span`
 `;
 
 export const Tag = styled.span`
-  font-size: 1.25rem;
+  font-size: 1rem;
   background-color: #287bff;
   margin: 0.25rem;
   padding: 0.25rem 0.5rem;

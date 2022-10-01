@@ -24,9 +24,7 @@ export const Analysis = () => {
   } else {
     return (
       <>
-        <h2 style={{ color: "#fff", fontSize: "3rem", marginTop: "6rem" }}>
-          Analysis
-        </h2>
+        <div style={{ marginTop: "6rem" }}></div>
         <Container>
           <TimeChart timeSeriesData={timeSeriesData} />
           <br />

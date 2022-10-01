@@ -48,7 +48,7 @@ export const CancelButton = styled(SubmitButton)`
 
 export const SelectButton = styled(Button)`
   width: ${(props) => props.width || "100%"};
-  color: #fff;
+  color: ${(props) => (props.full ? "#000" : "#fff")};
   background-color: transparent;
   border: none;
   z-index: 1;
@@ -61,13 +61,13 @@ export const SelectButton = styled(Button)`
     bottom: 0;
     left: 0;
     z-index: -1;
-    border: 2px solid #287bff;
+    border: 2px solid #fff;
     transform: scale(-1, 1) skew(22deg);
-    background-color: ${(props) => (props.full ? "#287bff" : "transparent")};
+    background-color: ${(props) => (props.full ? "#fff" : "transparent")};
     transition: 0.3s;
   }
 
   &:hover::before {
-    background-color: #287bff;
+    background-color: #fff;
   }
 `;

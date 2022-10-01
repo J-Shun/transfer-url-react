@@ -10,6 +10,7 @@ import { BsFillPlusCircleFill } from "react-icons/bs";
 import "../assets/icon.css";
 import { JellyTriangle } from "@uiball/loaders";
 import { Pagination } from "../components/Pagination";
+import { Navigate } from "react-router-dom";
 
 export const User = () => {
   const [showForm, setShowForm] = useState(false);
@@ -30,6 +31,8 @@ export const User = () => {
         <JellyTriangle size={60} speed={1.75} color="#fcee0a" />;
       </div>
     );
+  } else if (data?.status !== "success") {
+    return <Navigate to="/" />;
   } else {
     return (
       <>

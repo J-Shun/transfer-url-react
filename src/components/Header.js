@@ -80,7 +80,7 @@ export const Header = () => {
                 setDataListUrl(`${url + shortLinkRoute}?page=1`);
               }}
             >
-              Transfer URL
+              URL Transfer
             </HeaderTitle>
           </Link>
           <GiHamburgerMenu className="header-icon" onClick={toggleNav} />

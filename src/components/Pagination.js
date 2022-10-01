@@ -15,7 +15,7 @@ const Page = styled.li`
   position: relative;
   padding: 1rem 1.25rem;
   font-weight: bold;
-  color: #fff;
+  color: ${(props) => (props.active ? "#000" : "#fff")};
   background-color: transparent;
   border: none;
   z-index: 1;
@@ -31,12 +31,15 @@ const Page = styled.li`
     z-index: -1;
     border: 2px solid #fff;
     transform: scale(-1, 1) skew(22deg);
-    background-color: ${(props) => (props.active ? "#287bff" : "transparent")};
+    background-color: ${(props) => (props.active ? "#fff" : "transparent")};
     transition: 0.3s;
   }
 
+  &:hover {
+    color: #000;
+  }
   &:hover::before {
-    background-color: #287bff;
+    background-color: #fff;
   }
 `;
 
