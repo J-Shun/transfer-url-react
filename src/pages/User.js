@@ -11,6 +11,7 @@ import "../assets/icon.css";
 import { JellyTriangle } from "@uiball/loaders";
 import { Pagination } from "../components/Pagination";
 import { Navigate } from "react-router-dom";
+import { Select, Option } from "../shared/Input";
 
 export const User = () => {
   const [showForm, setShowForm] = useState(false);
@@ -39,7 +40,10 @@ export const User = () => {
         <Container>
           <div style={{ marginTop: "6rem" }}></div>
           <Group justify="space-between" mb="2rem">
-            <Button>Sort By</Button>
+            <Select width={"200px"}>
+              <Option>Created Time</Option>
+              <Option>Clicks</Option>
+            </Select>
           </Group>
 
           <BsFillPlusCircleFill

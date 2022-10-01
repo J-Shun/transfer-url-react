@@ -35,7 +35,7 @@ export const Label = styled.label`
 `;
 
 export const Select = styled.select`
-  width: 100%;
+  width: ${(props) => props.width || "100%"};
   font-size: 1.25rem;
   padding: 0.5rem 1rem;
   color: #fff;

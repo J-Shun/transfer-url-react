@@ -48,6 +48,50 @@ export const UrlData = ({ data }) => {
   return (
     <>
       <Card>
+        <div
+          style={{
+            width: "30px",
+            height: "30px",
+            position: "absolute",
+            top: "0",
+            left: "0",
+            borderLeft: "5px solid #FCEE0A",
+            borderTop: "5px solid #FCEE0A",
+          }}
+        ></div>
+        <div
+          style={{
+            width: "30px",
+            height: "30px",
+            position: "absolute",
+            top: "0",
+            right: "0",
+            borderRight: "5px solid #FCEE0A",
+            borderTop: "5px solid #FCEE0A",
+          }}
+        ></div>
+        <div
+          style={{
+            width: "30px",
+            height: "30px",
+            position: "absolute",
+            bottom: "0",
+            left: "0",
+            borderLeft: "5px solid #FCEE0A",
+            borderBottom: "5px solid #FCEE0A",
+          }}
+        ></div>
+        <div
+          style={{
+            width: "30px",
+            height: "30px",
+            position: "absolute",
+            bottom: "0",
+            right: "0",
+            borderRight: "5px solid #FCEE0A",
+            borderBottom: "5px solid #FCEE0A",
+          }}
+        ></div>
         <Group justify="space-between" mb="1rem">
           <FiEdit
             className="edit-icon"
