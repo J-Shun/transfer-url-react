@@ -20,7 +20,7 @@ const UrlDataSection = styled.div`
     font-weight: bold;
     font-style: italic;
     border-bottom: 2px solid #3afbd0;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .visitor-count {
@@ -192,7 +192,7 @@ export const UrlData = ({ data }) => {
         </GroupCol>
 
         <GroupCol justify="space-between" mb="3rem">
-          <Group items="center" justify="center" mb="1rem">
+          <Group items="center" justify="center" mb="1.25rem">
             <h2 className="url-title">SHORT URL</h2>
             <RiFileDownloadLine
               className="copy-btn"
@@ -201,11 +201,9 @@ export const UrlData = ({ data }) => {
             />
           </Group>
           <Group justify="space-evenly" items="center" wrap="nowrap">
-            <a href={url + data.shortUrl}>
-              <p ref={shortUrlRef} className="url">
-                {url + data.shortUrl}
-              </p>
-            </a>
+            <p ref={shortUrlRef} className="url">
+              {url + data.shortUrl}
+            </p>
           </Group>
         </GroupCol>
 
