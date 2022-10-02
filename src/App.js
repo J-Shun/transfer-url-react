@@ -35,6 +35,7 @@ function App() {
     message: "",
   });
   const [renderTrigger, setRenderTrigger] = useState(true);
+  const [sort, setSort] = useState("&desc=createdAt");
   const [callApi, setCallApi] = useState(false);
 
   const [dataListUrl, setDataListUrl] = useState(
@@ -52,6 +53,8 @@ function App() {
         setDataListUrl,
         callApi,
         setCallApi,
+        sort,
+        setSort,
       }}
     >
       <main className="global-background">
