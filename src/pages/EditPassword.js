@@ -1,17 +1,18 @@
-import { Card } from "../shared/Card";
+import { useState, useContext } from "react";
+import { Navigate } from "react-router-dom";
+import { Context } from "../App";
+import { sendData, useFetch } from "../api/api";
+import { url, editPasswordRoute, checkTokenRoute } from "../api/routes";
 import { Container } from "../shared/Container";
+import { Card } from "../shared/Card";
 import { Input } from "../shared/Input";
 import { SubmitButton } from "../shared/Button";
 import { Group } from "../shared/Group";
 import { CardTitle } from "../shared/Text";
-import { useState, useContext } from "react";
-import { sendData, useFetch } from "../api/api";
-import { url, editPasswordRoute, checkTokenRoute } from "../api/routes";
+import { Corner } from "../shared/Corner";
 import { Model } from "../components/Model";
-import { Context } from "../App";
-import { isFill, isValidPassword } from "../utilities/checkForm";
-import { Navigate } from "react-router-dom";
 import { PageLoading, ApiLoading } from "../components/Loading";
+import { isFill, isValidPassword } from "../utilities/checkForm";
 
 export const EditPassword = () => {
   const { modelDispatch, callApi, setCallApi } = useContext(Context);
@@ -81,10 +82,8 @@ export const EditPassword = () => {
     <>
       <Container>
         <Card mt="8rem" maxWidth="500px">
-          <div className="card-corner card-left-top"></div>
-          <div className="card-corner card-right-top"></div>
-          <div className="card-corner card-left-bottom"></div>
-          <div className="card-corner card-right-bottom"></div>
+          <Corner />
+
           <CardTitle mb="2rem">Edit Password</CardTitle>
           <Input
             mb="1.5rem"

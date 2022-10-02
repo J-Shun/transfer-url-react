@@ -6,10 +6,11 @@ import { RiFileDownloadLine, RiDeleteBack2Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { url } from "../api/routes";
 import { Group, GroupCol } from "../shared/Group";
-import { Confirm } from "./Confirm";
+import { Corner } from "../shared/Corner";
+import { Tag } from "./Tag";
 import { EditOg } from "./EditOg";
 import { EditTag } from "./EditTag";
-import "../assets/icon.css";
+import { Confirm } from "./Confirm";
 import styled from "styled-components";
 
 const UrlDataSection = styled.div`
@@ -79,7 +80,44 @@ const UrlDataSection = styled.div`
     overflow: hidden;
   }
 
-  .detail-icon {
+  .btn-group {
+    font-size: 1.75rem;
+    color: #fff;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+
+  .edit-btn {
+    &:hover {
+      color: #fcee0a;
+    }
+  }
+
+  .tag-btn {
+    &:hover {
+      color: #287bff;
+    }
+  }
+
+  .analyze-btn {
+    &:hover {
+      color: #3afbd0;
+    }
+  }
+
+  .delete-btn {
+    &:hover {
+      color: #e23832;
+    }
+  }
+
+  .copy-btn {
+    color: #fcee0a;
+    font-size: 1.75rem;
+    cursor: pointer;
+  }
+
+  .detail-btn {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -119,43 +157,34 @@ export const UrlData = ({ data }) => {
   return (
     <UrlDataSection showDetail={showDetail}>
       <Card>
-        <div className="card-corner card-left-top"></div>
-        <div className="card-corner card-right-top"></div>
-        <div className="card-corner card-left-bottom"></div>
-        <div className="card-corner card-right-bottom"></div>
+        <Corner />
 
         <Group justify="space-between" mb="3rem">
           <FiEdit
-            className="edit-icon"
+            className="btn-group edit-btn"
             onClick={() => {
               setShowOgForm(true);
             }}
           />
 
-          <BsTags className="edit-icon" onClick={() => setShowTagForm(true)} />
+          <BsTags
+            className="btn-group tag-btn"
+            onClick={() => setShowTagForm(true)}
+          />
 
           <Link to={`/user/shortUrl/${data._id}`}>
-            <BsClipboardData className="analysis-icon" />
+            <BsClipboardData className="btn-group analyze-btn" />
           </Link>
 
           <RiDeleteBack2Line
-            className="delete-icon"
+            className="btn-group delete-btn"
             onClick={() => {
               setCheckDelete({ ...checkDelete, showWarning: true });
             }}
           />
         </Group>
 
-        <Group items="center" justify="center" wrap="true" mb="3rem">
-          {data.tags &&
-            data.tags.map((tag, index) => {
-              return (
-                <span className="tag" key={index}>
-                  {tag}
-                </span>
-              );
-            })}
-        </Group>
+        <Tag tags={data.tags} />
 
         <GroupCol mb="3rem" items="center">
           <h2 className="visitor-title">No Repeat Clicks</h2>
@@ -166,7 +195,7 @@ export const UrlData = ({ data }) => {
           <Group items="center" justify="center" mb="1rem">
             <h2 className="url-title">SHORT URL</h2>
             <RiFileDownloadLine
-              className="copy-icon"
+              className="copy-btn"
               name="shortUrl"
               onClick={copyShortUrl}
             />
@@ -185,7 +214,7 @@ export const UrlData = ({ data }) => {
             <Group mb="1rem">
               <h2 className="url-title">Original URL</h2>
               <RiFileDownloadLine
-                className="copy-icon"
+                className="copy-btn"
                 onClick={copyOriginalUrl}
               />
             </Group>
@@ -195,7 +224,7 @@ export const UrlData = ({ data }) => {
           </GroupCol>
         </div>
 
-        <BsChevronDoubleDown className="detail-icon" onClick={toggleDetail} />
+        <BsChevronDoubleDown className="detail-btn" onClick={toggleDetail} />
       </Card>
 
       <EditOg

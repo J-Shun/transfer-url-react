@@ -1,16 +1,15 @@
-import styled from "styled-components";
+import { useState } from "react";
+import { Navigate } from "react-router-dom";
+import { Login } from "../components/Login";
+import { Register } from "../components/Register";
+import { useFetch } from "../api/api";
+import { ForgetPassword } from "../components/ForgetPassword";
+import { PageLoading } from "../components/Loading";
 import { SelectButton } from "../shared/Button";
 import { HomeTitle } from "../shared/Text";
 import { Group } from "../shared/Group";
-import { Login } from "../components/Login";
-import { ForgetPassword } from "../components/ForgetPassword";
-import { Register } from "../components/Register";
-import { useState } from "react";
-import { useFetch } from "../api/api";
 import { url, checkTokenRoute } from "../api/routes";
-import "../assets/icon.css";
-import { PageLoading } from "../components/Loading";
-import { Navigate } from "react-router-dom";
+import styled from "styled-components";
 
 const Form = styled.div`
   position: relative;
