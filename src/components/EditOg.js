@@ -8,11 +8,10 @@ import { useState, useContext } from "react";
 import { sendData, uploadImage } from "../api/api";
 import { url, shortLinkRoute, uploadImageRoute } from "../api/routes";
 import { TiDeleteOutline } from "react-icons/ti";
-import styled from "styled-components";
 import { Context } from "../App";
 import { isFill } from "../utilities/checkForm";
 import validator from "validator";
-import "../assets/icon.css";
+import styled from "styled-components";
 
 const OgSection = styled.div`
   position: fixed;
@@ -27,11 +26,24 @@ const OgSection = styled.div`
   transition: transform 0.5s;
   transform: ${(props) =>
     props.showForm ? "translateX(0)" : "translateX(-100%)"};
+
+  .cancel-btn {
+    position: absolute;
+    right: 0;
+    font-size: 1.75rem;
+    cursor: pointer;
+    color: #e23832;
+  }
 `;
 
-export const Og = ({ showOgForm, setShowOgForm, og, id }) => {
-  const { modelDispatch, renderTrigger, setRenderTrigger, setDataListUrl } =
-    useContext(Context);
+export const EditOg = ({ showOgForm, setShowOgForm, og, id }) => {
+  const {
+    modelDispatch,
+    renderTrigger,
+    setRenderTrigger,
+    setDataListUrl,
+    setCallApi,
+  } = useContext(Context);
   const ogPrototype = {
     type: "",
     title: "",
@@ -86,14 +98,15 @@ export const Og = ({ showOgForm, setShowOgForm, og, id }) => {
   };
 
   const submitUpload = async (e) => {
-    if (e.target.files[0] === undefined) {
-      return;
-    }
+    if (e.target.files[0] === undefined) return;
     const file = e.target.files[0];
     if (!validImage(file)) return;
     const formData = new FormData();
     formData.append("file", file);
+
+    setCallApi(true);
     const result = await uploadImage("post", url + uploadImageRoute, formData);
+    setCallApi(false);
     setImage(result.imgUrl);
     setImageName(file.name);
   };
@@ -142,11 +155,15 @@ export const Og = ({ showOgForm, setShowOgForm, og, id }) => {
   const editOg = async () => {
     if (!isForm()) return;
     const cleanData = rebuildForm(formData);
+
+    setCallApi(true);
     const result = await sendData(
       "post",
       `${url + shortLinkRoute}/${id}/og`,
       cleanData
     );
+    setCallApi(false);
+
     if (result.status === "success") {
       setRenderTrigger(!renderTrigger);
       setDataListUrl(`${url + shortLinkRoute}?page=1`);
@@ -155,7 +172,7 @@ export const Og = ({ showOgForm, setShowOgForm, og, id }) => {
       modelDispatch({
         type: "show",
         status: "error",
-        message: "system error",
+        message: "server error",
       });
       return false;
     }
@@ -219,7 +236,7 @@ export const Og = ({ showOgForm, setShowOgForm, og, id }) => {
                     />
                   </Label>
                   <TiDeleteOutline
-                    className="cancel-image-icon"
+                    className="cancel-btn"
                     onClick={cancelImage}
                   />
                 </Group>

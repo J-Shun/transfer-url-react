@@ -1,4 +1,5 @@
 export const isFill = (data) => {
+  if (data === undefined) return false;
   if (data.trim().length < 1) return false;
   else return true;
 };

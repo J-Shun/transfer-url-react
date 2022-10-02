@@ -6,11 +6,34 @@ import { useState, useContext } from "react";
 import { Context } from "../App";
 import { useFetch } from "../api/api";
 import { BsFillPlusCircleFill } from "react-icons/bs";
-import "../assets/icon.css";
-import { JellyTriangle } from "@uiball/loaders";
 import { Pagination } from "../components/Pagination";
 import { Navigate } from "react-router-dom";
 import { Select, Option } from "../shared/Input";
+import { PageLoading } from "../components/Loading";
+import styled from "styled-components";
+
+const UserSection = styled.div`
+  .create-btn {
+    position: fixed;
+    right: 2.5rem;
+    bottom: 2.5rem;
+    color: #fcee0a;
+    background-color: #000;
+    cursor: pointer;
+    font-size: 3.5rem;
+    z-index: 2;
+    border-radius: 50%;
+    transition: 0.3s;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .block {
+    margin-top: 8rem;
+  }
+`;
 
 export const User = () => {
   const { dataListUrl, renderTrigger } = useContext(Context);
@@ -23,41 +46,35 @@ export const User = () => {
     totalPage: data?.pages?.totalPages,
   };
 
-  if (isLoading) {
-    return (
-      <div className="icon-background">
-        <JellyTriangle size={60} speed={1.75} color="#fcee0a" />;
-      </div>
-    );
-  } else if (data?.status !== "success") {
-    return <Navigate to="/" />;
-  } else {
-    return (
-      <>
-        <Container>
-          <div style={{ marginTop: "8rem" }}></div>
-          <Group justify="space-between" mb="4rem">
-            <Select width={"200px"}>
-              <Option>Created Time</Option>
-              <Option>Clicks</Option>
-            </Select>
-          </Group>
+  if (isLoading) return <PageLoading />;
+  if (data?.status !== "success") return <Navigate to="/" />;
 
-          <BsFillPlusCircleFill
-            className="create-icon"
-            onClick={() => {
-              setShowForm(true);
-            }}
-          />
+  return (
+    <UserSection>
+      <Container>
+        <div className="block"></div>
+        <Group justify="space-between" mb="4rem">
+          <Select width={"200px"}>
+            <Option>Created Time</Option>
+            <Option>Clicks</Option>
+          </Select>
+        </Group>
 
-          {shortLinkList.map((linkData) => {
-            return <UrlData key={linkData._id} data={linkData} />;
-          })}
+        <BsFillPlusCircleFill
+          className="create-btn"
+          onClick={() => {
+            setShowForm(true);
+          }}
+        />
 
-          <Pagination pageStatus={pageStatus} />
-        </Container>
-        <ShortLinkForm showForm={showForm} setShowForm={setShowForm} />
-      </>
-    );
-  }
+        {shortLinkList.map((linkData) => {
+          return <UrlData key={linkData._id} data={linkData} />;
+        })}
+
+        <Pagination pageStatus={pageStatus} />
+      </Container>
+
+      <ShortLinkForm showForm={showForm} setShowForm={setShowForm} />
+    </UserSection>
+  );
 };

@@ -1,4 +1,8 @@
-import { useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import { Context } from "../App";
+import { sendData, uploadImage } from "../api/api";
+import { url, shortLinkRoute, uploadImageRoute } from "../api/routes";
+import { Model } from "./Model";
 import { Label, Input, Select, Option } from "../shared/Input";
 import { SubmitButton, CancelButton } from "../shared/Button";
 import { Group, GroupCol } from "../shared/Group";
@@ -6,18 +10,12 @@ import { Container } from "../shared/Container";
 import { CardTitle, CardSubTitle } from "../shared/Text";
 import { Card } from "../shared/Card";
 import { MdContentPaste } from "react-icons/md";
-import { useState, useContext } from "react";
-import { sendData, uploadImage } from "../api/api";
-import { url, shortLinkRoute, uploadImageRoute } from "../api/routes";
-import styled from "styled-components";
-import { BsChevronDoubleDown } from "react-icons/bs";
-import { Model } from "./Model";
-import { Context } from "../App";
-import { isFill } from "../utilities/checkForm";
-import { toArray } from "../utilities/toArray";
-import validator from "validator";
 import { TiDeleteOutline } from "react-icons/ti";
-import "../assets/icon.css";
+import { BsChevronDoubleDown } from "react-icons/bs";
+import { toArray } from "../utilities/toArray";
+import { isFill } from "../utilities/checkForm";
+import validator from "validator";
+import styled from "styled-components";
 
 const ShortLinkSection = styled.div`
   position: absolute;
@@ -33,7 +31,7 @@ const ShortLinkSection = styled.div`
   transform: ${(props) =>
     props.showForm ? "translateX(0)" : "translateX(-100%)"};
 
-  .paste-icon {
+  .paste-btn {
     position: absolute;
     right: 0;
     margin: 0 0.5rem;
@@ -42,12 +40,20 @@ const ShortLinkSection = styled.div`
     color: #fff;
   }
 
-  .arrow-icon {
+  .arrow-btn {
     margin: 0 0.5rem;
     font-size: 22px;
     transform: rotate(${(props) => props.showCustomize && "180deg"});
     transition: 0.3s;
     cursor: pointer;
+  }
+
+  .cancel-btn {
+    position: absolute;
+    right: 0;
+    font-size: 1.75rem;
+    cursor: pointer;
+    color: #e23832;
   }
 
   .customize-section {
@@ -59,8 +65,13 @@ const ShortLinkSection = styled.div`
 `;
 
 export const ShortLinkForm = ({ showForm, setShowForm }) => {
-  const { modelDispatch, renderTrigger, setRenderTrigger, setDataListUrl } =
-    useContext(Context);
+  const {
+    modelDispatch,
+    renderTrigger,
+    setRenderTrigger,
+    setDataListUrl,
+    setCallApi,
+  } = useContext(Context);
   const originalUrlRef = useRef(undefined);
   const [showCustomize, setShowCustomize] = useState(false);
   const [image, setImage] = useState("");
@@ -115,14 +126,16 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
   };
 
   const submitUpload = async (e) => {
-    if (e.target.files[0] === undefined) {
-      return;
-    }
+    if (e.target.files[0] === undefined) return;
     const file = e.target.files[0];
     if (!validImage(file)) return;
     const formData = new FormData();
     formData.append("file", file);
+
+    setCallApi(true);
     const result = await uploadImage("post", url + uploadImageRoute, formData);
+    setCallApi(false);
+
     setImage(result.imgUrl);
     setImageName(file.name);
   };
@@ -195,8 +208,10 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
     if (!isFormPass()) return;
     const cleanData = rebuildForm(formData);
 
+    setCallApi(true);
     const result = await sendData("post", url + shortLinkRoute, cleanData);
-    console.log(result);
+    setCallApi(false);
+
     if (result.status === "success") {
       setRenderTrigger(!renderTrigger);
       setDataListUrl(`${url + shortLinkRoute}?page=1`);
@@ -206,6 +221,13 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
         type: "show",
         status: "error",
         message: "url name already taken",
+      });
+      return false;
+    } else {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "server error",
       });
       return false;
     }
@@ -229,7 +251,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
                   value={formData.originUrl}
                   onChange={handleForm}
                 />
-                <MdContentPaste className="paste-icon" onClick={paste} />
+                <MdContentPaste className="paste-btn" onClick={paste} />
               </Group>
             </GroupCol>
 
@@ -249,7 +271,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
               <Group justify="space-between" items="center">
                 <CardSubTitle>OG : CUSTOMIZE</CardSubTitle>
                 <BsChevronDoubleDown
-                  className="arrow-icon"
+                  className="arrow-btn"
                   onClick={() => {
                     setShowCustomize(!showCustomize);
                   }}
@@ -301,7 +323,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
                     />
                   </Label>
                   <TiDeleteOutline
-                    className="cancel-image-icon"
+                    className="cancel-btn"
                     onClick={cancelImage}
                   />
                 </Group>
@@ -322,6 +344,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
           </Card>
         </Container>
       </ShortLinkSection>
+
       <Model />
     </>
   );

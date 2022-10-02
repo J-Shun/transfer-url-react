@@ -4,14 +4,11 @@ import { Card } from "../shared/Card";
 import { BsClipboardData, BsChevronDoubleDown, BsTags } from "react-icons/bs";
 import { RiFileDownloadLine, RiDeleteBack2Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
-import { MdOutlineDoneAll } from "react-icons/md";
-import { url, shortLinkRoute } from "../api/routes";
-import { sendData } from "../api/api";
+import { url } from "../api/routes";
 import { Group, GroupCol } from "../shared/Group";
 import { Confirm } from "./Confirm";
-import { Input } from "../shared/Input";
-import { toArray } from "../utilities/toArray";
-import { Og } from "./Og";
+import { EditOg } from "./EditOg";
+import { EditTag } from "./EditTag";
 import "../assets/icon.css";
 import styled from "styled-components";
 
@@ -101,32 +98,18 @@ const UrlDataSection = styled.div`
 
 export const UrlData = ({ data }) => {
   const [checkDelete, setCheckDelete] = useState(false);
-  const [tags, setTags] = useState(data.tags);
-  const [tagsStatus, setTagsStatus] = useState(data.tags.join(" "));
-  const [editTags, setEditTags] = useState(false);
   const [showOgForm, setShowOgForm] = useState(false);
+  const [showTagForm, setShowTagForm] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
   const shortUrlRef = useRef(undefined);
+  const originalUrlRef = useRef(undefined);
 
-  const copyUrl = () => {
+  const copyShortUrl = () => {
     navigator.clipboard.writeText(shortUrlRef.current.innerText);
   };
 
-  const handleTagsStatus = (e) => {
-    setTagsStatus(e.target.value);
-  };
-
-  const submitTagsStatus = async () => {
-    const newTags = toArray(tagsStatus) === "" ? [] : toArray(tagsStatus);
-    const newData = { tags: newTags };
-    const result = await sendData(
-      "POST",
-      `${url + shortLinkRoute}/${data._id}/tags`,
-      newData
-    );
-    console.log(result);
-    setTags(newTags);
-    setEditTags(false);
+  const copyOriginalUrl = () => {
+    navigator.clipboard.writeText(originalUrlRef.current.innerText);
   };
 
   const toggleDetail = () => {
@@ -149,10 +132,7 @@ export const UrlData = ({ data }) => {
             }}
           />
 
-          <BsTags
-            className="edit-icon"
-            onClick={() => setEditTags(!editTags)}
-          />
+          <BsTags className="edit-icon" onClick={() => setShowTagForm(true)} />
 
           <Link to={`/user/shortUrl/${data._id}`}>
             <BsClipboardData className="analysis-icon" />
@@ -166,33 +146,16 @@ export const UrlData = ({ data }) => {
           />
         </Group>
 
-        <GroupCol mb="3rem">
-          <GroupCol>
-            <Group items="center" justify="center" wrap="true">
-              {tags &&
-                tags.map((tag, index) => {
-                  return (
-                    <span className="tag" key={index}>
-                      {tag}
-                    </span>
-                  );
-                })}
-            </Group>
-            {editTags === true && (
-              <Group items="center" mt="1rem" mb="1rem" justify="center">
-                <Input
-                  style={{ paddingRight: "2rem" }}
-                  value={tagsStatus}
-                  onChange={handleTagsStatus}
-                />
-                <MdOutlineDoneAll
-                  className="done-icon"
-                  onClick={submitTagsStatus}
-                />
-              </Group>
-            )}
-          </GroupCol>
-        </GroupCol>
+        <Group items="center" justify="center" wrap="true" mb="3rem">
+          {data.tags &&
+            data.tags.map((tag, index) => {
+              return (
+                <span className="tag" key={index}>
+                  {tag}
+                </span>
+              );
+            })}
+        </Group>
 
         <GroupCol mb="3rem" items="center">
           <h2 className="visitor-title">No Repeat Clicks</h2>
@@ -202,7 +165,11 @@ export const UrlData = ({ data }) => {
         <GroupCol justify="space-between" mb="3rem">
           <Group items="center" justify="center" mb="1rem">
             <h2 className="url-title">SHORT URL</h2>
-            <RiFileDownloadLine className="copy-icon" onClick={copyUrl} />
+            <RiFileDownloadLine
+              className="copy-icon"
+              name="shortUrl"
+              onClick={copyShortUrl}
+            />
           </Group>
           <Group justify="space-evenly" items="center" wrap="nowrap">
             <a href={url + data.shortUrl}>
@@ -217,19 +184,31 @@ export const UrlData = ({ data }) => {
           <GroupCol mb="3rem" items="center">
             <Group mb="1rem">
               <h2 className="url-title">Original URL</h2>
-              <RiFileDownloadLine className="copy-icon" />
+              <RiFileDownloadLine
+                className="copy-icon"
+                onClick={copyOriginalUrl}
+              />
             </Group>
-            <p className="url">{data.originUrl}</p>
+            <p className="url" ref={originalUrlRef}>
+              {data.originUrl}
+            </p>
           </GroupCol>
         </div>
 
         <BsChevronDoubleDown className="detail-icon" onClick={toggleDetail} />
       </Card>
 
-      <Og
+      <EditOg
         showOgForm={showOgForm}
         setShowOgForm={setShowOgForm}
         og={data.og}
+        id={data._id}
+      />
+
+      <EditTag
+        showTagForm={showTagForm}
+        setShowTagForm={setShowTagForm}
+        tags={data.tags}
         id={data._id}
       />
 

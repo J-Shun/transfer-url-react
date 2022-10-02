@@ -1,10 +1,11 @@
-import styled from "styled-components";
 import { BsExclamationCircleFill } from "react-icons/bs";
 import { url, shortLinkRoute } from "../api/routes";
 import { deleteData } from "../api/api";
 import { Context } from "../App";
 import { useContext } from "react";
+import { ApiLoading } from "./Loading";
 
+import styled from "styled-components";
 const ModelSection = styled.div`
   width: 100vw;
   height: 100vh;
@@ -106,34 +107,46 @@ const ModelSection = styled.div`
 `;
 
 export const Confirm = ({ checkDelete, setCheckDelete, id }) => {
-  const { setDataListUrl, renderTrigger, setRenderTrigger } =
-    useContext(Context);
+  const {
+    setDataListUrl,
+    renderTrigger,
+    setRenderTrigger,
+    callApi,
+    setCallApi,
+  } = useContext(Context);
+
   const DeleteShortLink = async () => {
+    setCallApi(true);
     const result = await deleteData("delete", url + shortLinkRoute + "/" + id);
+    setCallApi(false);
     if (result.status === "success") {
       setRenderTrigger(!renderTrigger);
       setDataListUrl(`${url + shortLinkRoute}?page=1`);
     }
   };
   return (
-    <ModelSection show={checkDelete}>
-      <div className="overlay"></div>
-      <div className="model-content">
-        <BsExclamationCircleFill className="warning" />
-        <h2>-- Warning --</h2>
-        <p>Data Will Be Removed</p>
-        <div className="button-group">
-          <button
-            onClick={() => {
-              setCheckDelete(false);
-              DeleteShortLink();
-            }}
-          >
-            DELETE
-          </button>
-          <button onClick={() => setCheckDelete(false)}>CANCEL</button>
+    <>
+      <ModelSection show={checkDelete}>
+        <div className="overlay"></div>
+        <div className="model-content">
+          <BsExclamationCircleFill className="warning" />
+          <h2>-- Warning --</h2>
+          <p>Data Will Be Removed</p>
+          <div className="button-group">
+            <button
+              onClick={() => {
+                setCheckDelete(false);
+                DeleteShortLink();
+              }}
+            >
+              DELETE
+            </button>
+            <button onClick={() => setCheckDelete(false)}>CANCEL</button>
+          </div>
         </div>
-      </div>
-    </ModelSection>
+      </ModelSection>
+
+      {callApi && <ApiLoading />}
+    </>
   );
 };

@@ -17,6 +17,24 @@ export const Input = styled.input`
   }
 `;
 
+export const TextArea = styled.textarea`
+  width: 100%;
+  height: 150px;
+  font-size: 1.25rem;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  background-color: transparent;
+  border: 2px solid #fff;
+  outline: none;
+  margin-bottom: ${(props) => props.mb};
+  transition: ease-out 0.5s;
+  resize: none;
+
+  &:focus {
+    border: 2px solid #fcee0a;
+  }
+`;
+
 export const Label = styled.label`
   width: 100%;
   font-size: 1.25rem;
