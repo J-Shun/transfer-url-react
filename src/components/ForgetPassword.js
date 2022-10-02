@@ -9,9 +9,10 @@ import { url, resetPasswordRoute } from "../api/routes";
 import { Model } from "./Model";
 import { Context } from "../App";
 import { isFill, isValidEmail, isValidPassword } from "../utilities/checkForm";
+import { ApiLoading } from "./Loading";
 
 export const ForgetPassword = ({ setCategory, setLoginForm }) => {
-  const { modelDispatch } = useContext(Context);
+  const { modelDispatch, callApi, setCallApi } = useContext(Context);
   const [resetData, setResetData] = useState({
     email: "",
     safetyQuestion: "",
@@ -83,7 +84,10 @@ export const ForgetPassword = ({ setCategory, setLoginForm }) => {
     e.preventDefault();
     if (!isFormPass()) return;
 
+    setCallApi(true);
     const result = await sendData("patch", url + resetPasswordRoute, resetData);
+    setCallApi(false);
+
     if (result.status === "success") {
       setCategory("login");
       modelDispatch({
@@ -92,17 +96,23 @@ export const ForgetPassword = ({ setCategory, setLoginForm }) => {
         message: "password reset success",
       });
       setLoginForm({ login: true, register: false });
-    } else if (result.message === "無此用戶") {
+    } else if (result.message === "User not found") {
       modelDispatch({
         type: "show",
         status: "error",
-        message: "no this account",
+        message: "user not found",
       });
-    } else if (result.message === "安全提問錯誤") {
+    } else if (result.message === "Incorrect safety QA") {
       modelDispatch({
         type: "show",
         status: "error",
-        message: "wrong answer",
+        message: "answer incorrect",
+      });
+    } else {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "server error",
       });
     }
   };
@@ -163,6 +173,8 @@ export const ForgetPassword = ({ setCategory, setLoginForm }) => {
       <SubmitButton mb="5rem" onClick={resetPassword}>
         SUBMIT
       </SubmitButton>
+
+      {callApi && <ApiLoading />}
 
       <Model />
     </>

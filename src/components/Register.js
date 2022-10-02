@@ -10,10 +10,11 @@ import { Context } from "../App";
 import { isFill, isValidEmail, isValidPassword } from "../utilities/checkForm";
 import { useNavigate } from "react-router-dom";
 import { saveToken } from "../utilities/saveToken";
+import { ApiLoading } from "./Loading";
 
 export const Register = () => {
   const navigate = useNavigate();
-  const { modelDispatch } = useContext(Context);
+  const { modelDispatch, callApi, setCallApi } = useContext(Context);
   const [register, setRegister] = useState({
     name: "",
     email: "",
@@ -93,14 +94,12 @@ export const Register = () => {
     e.preventDefault();
     if (!isFormPass()) return;
 
+    setCallApi(true);
     const result = await sendData("post", url + signUpRoute, register);
+    setCallApi(false);
+
     if (result.token) {
       saveToken(result);
-      modelDispatch({
-        type: "show",
-        status: "success",
-        message: "account created",
-      });
       navigate("/user");
     } else {
       modelDispatch({
@@ -178,6 +177,8 @@ export const Register = () => {
       <SubmitButton mb="5rem" onClick={submitRegister}>
         SUBMIT
       </SubmitButton>
+
+      {callApi && <ApiLoading />}
 
       <Model />
     </>

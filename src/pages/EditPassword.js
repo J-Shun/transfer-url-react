@@ -87,6 +87,10 @@ export const EditPassword = () => {
       <>
         <Container>
           <Card mt="8rem" maxWidth="500px">
+            <div className="card-corner card-left-top"></div>
+            <div className="card-corner card-right-top"></div>
+            <div className="card-corner card-left-bottom"></div>
+            <div className="card-corner card-right-bottom"></div>
             <CardTitle mb="2rem">Edit Password</CardTitle>
             <Input
               mb="1.5rem"

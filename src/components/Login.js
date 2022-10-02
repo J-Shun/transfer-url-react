@@ -9,10 +9,12 @@ import { Context } from "../App";
 import { url, loginRoute } from "../api/routes";
 import { isFill, isValidEmail } from "../utilities/checkForm";
 import { useNavigate } from "react-router-dom";
+import { ApiLoading } from "../components/Loading";
+import { saveToken } from "../utilities/saveToken";
 
 export const Login = ({ setCategory, setLoginForm }) => {
   const navigate = useNavigate();
-  const { modelDispatch } = useContext(Context);
+  const { modelDispatch, callApi, setCallApi } = useContext(Context);
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -53,23 +55,18 @@ export const Login = ({ setCategory, setLoginForm }) => {
     e.preventDefault();
     if (!isFormPass()) return;
 
+    setCallApi(true);
     const result = await sendData("post", url + loginRoute, login);
+    setCallApi(false);
+
     if (result.token) {
-      localStorage.setItem("token", result.token);
-      localStorage.setItem("user", result.name);
-      localStorage.setItem("email", result.email);
+      saveToken(result);
       navigate("/user");
-    } else if (result.message === "會員不存在") {
+    } else if (result.message === "Incorrect email or password") {
       modelDispatch({
         type: "show",
         status: "error",
-        message: "account not found",
-      });
-    } else if (result.message === "密碼錯誤") {
-      modelDispatch({
-        type: "show",
-        status: "error",
-        message: "wrong password",
+        message: "account or password fail",
       });
     }
   };
@@ -112,6 +109,9 @@ export const Login = ({ setCategory, setLoginForm }) => {
       >
         FORGET PASSWORD
       </Help>
+
+      {callApi && <ApiLoading />}
+
       <Model />
     </>
   );

@@ -10,19 +10,15 @@ import { url, updateFileRoute, checkTokenRoute } from "../api/routes";
 import { Model } from "../components/Model";
 import { Context } from "../App";
 import { isFill } from "../utilities/checkForm";
-import { JellyTriangle } from "@uiball/loaders";
 import { Navigate } from "react-router-dom";
+import { PageLoading, ApiLoading } from "../components/Loading";
 
 export const Profile = () => {
-  const { modelDispatch } = useContext(Context);
-  const [profile, setProfile] = useState({
-    name: localStorage.user,
-  });
+  const { modelDispatch, callApi, setCallApi } = useContext(Context);
+  const [profile, setProfile] = useState({ name: localStorage.user });
 
   const { data, isLoading } = useFetch(url + checkTokenRoute);
-  if (data.message === "jwt malformed") {
-    return <Navigate to="/" />;
-  }
+  if (data.message === "jwt malformed") return <Navigate to="/" />;
 
   const handleProfile = (e) => {
     const { name, value } = e.target;
@@ -44,7 +40,9 @@ export const Profile = () => {
 
   const submit = async () => {
     if (!isFormPass()) return;
+    setCallApi(true);
     const result = await sendData("patch", url + updateFileRoute, profile);
+    setCallApi(false);
     if (result.status === "success") {
       localStorage.setItem("user", result.name);
       modelDispatch({
@@ -62,16 +60,17 @@ export const Profile = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="icon-background">
-        <JellyTriangle size={60} speed={1.75} color="#fcee0a" />;
-      </div>
-    );
+    return <PageLoading />;
   } else {
     return (
       <>
         <Container>
           <Card mt="8rem" maxWidth="500px">
+            <div className="card-corner card-left-top"></div>
+            <div className="card-corner card-right-top"></div>
+            <div className="card-corner card-left-bottom"></div>
+            <div className="card-corner card-right-bottom"></div>
+
             <CardTitle mb="2rem">Profile</CardTitle>
             <GroupCol mb="2rem">
               <CardSubTitle>EMAIL</CardSubTitle>
@@ -91,6 +90,8 @@ export const Profile = () => {
             </Group>
           </Card>
         </Container>
+
+        {callApi && <ApiLoading />}
 
         <Model />
       </>

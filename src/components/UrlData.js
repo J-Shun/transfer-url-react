@@ -1,20 +1,18 @@
+import { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Card } from "../shared/Card";
-import { Group, GroupCol } from "../shared/Group";
 import { BsClipboardData, BsChevronDoubleDown, BsTags } from "react-icons/bs";
+import { RiFileDownloadLine, RiDeleteBack2Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
-import { CardSubTitle, Tag } from "../shared/Text";
+import { MdOutlineDoneAll } from "react-icons/md";
 import { url, shortLinkRoute } from "../api/routes";
 import { sendData } from "../api/api";
-import { Link } from "react-router-dom";
-import "../assets/icon.css";
-import { RiFileDownloadLine } from "react-icons/ri";
-import { useState, useRef } from "react";
+import { Group, GroupCol } from "../shared/Group";
 import { Confirm } from "./Confirm";
 import { Input } from "../shared/Input";
-import { MdOutlineDoneAll } from "react-icons/md";
 import { toArray } from "../utilities/toArray";
 import { Og } from "./Og";
-import { RiDeleteBack2Line } from "react-icons/ri";
+import "../assets/icon.css";
 import styled from "styled-components";
 
 const UrlDataSection = styled.div`
@@ -76,10 +74,12 @@ const UrlDataSection = styled.div`
   }
 
   .detail-section {
-    transition: 0.3s;
+    transition: 0.5s;
     transform: translateY(${(props) => props.showDetail || "-100%"});
     z-index: ${(props) => props.showDetail || "-1"};
     height: ${(props) => props.showDetail || "0"};
+    margin-bottom: 3rem;
+    overflow: hidden;
   }
 
   .detail-icon {
@@ -91,8 +91,9 @@ const UrlDataSection = styled.div`
     padding: 0.25rem;
     left: 50%;
     bottom: 0.25rem;
+    color: #fcee0a;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.5s;
     translate: -50%;
     rotate: ${(props) => props.showDetail && "180deg"};
   }
@@ -135,52 +136,12 @@ export const UrlData = ({ data }) => {
   return (
     <UrlDataSection showDetail={showDetail}>
       <Card>
-        <div
-          style={{
-            width: "30px",
-            height: "30px",
-            position: "absolute",
-            top: "-5px",
-            left: "-5px",
-            borderLeft: "5px solid #FCEE0A",
-            borderTop: "5px solid #FCEE0A",
-          }}
-        ></div>
-        <div
-          style={{
-            width: "30px",
-            height: "30px",
-            position: "absolute",
-            top: "-5px",
-            right: "-5px",
-            borderRight: "5px solid #FCEE0A",
-            borderTop: "5px solid #FCEE0A",
-          }}
-        ></div>
-        <div
-          style={{
-            width: "30px",
-            height: "30px",
-            position: "absolute",
-            bottom: "-5px",
-            left: "-5px",
-            borderLeft: "5px solid #FCEE0A",
-            borderBottom: "5px solid #FCEE0A",
-          }}
-        ></div>
-        <div
-          style={{
-            width: "30px",
-            height: "30px",
-            position: "absolute",
-            bottom: "-5px",
-            right: "-5px",
-            borderRight: "5px solid #FCEE0A",
-            borderBottom: "5px solid #FCEE0A",
-          }}
-        ></div>
+        <div className="card-corner card-left-top"></div>
+        <div className="card-corner card-right-top"></div>
+        <div className="card-corner card-left-bottom"></div>
+        <div className="card-corner card-right-bottom"></div>
 
-        <Group justify="space-between" mb="2rem">
+        <Group justify="space-between" mb="3rem">
           <FiEdit
             className="edit-icon"
             onClick={() => {
@@ -205,7 +166,7 @@ export const UrlData = ({ data }) => {
           />
         </Group>
 
-        <GroupCol mb="2rem">
+        <GroupCol mb="3rem">
           <GroupCol>
             <Group items="center" justify="center" wrap="true">
               {tags &&
@@ -233,12 +194,12 @@ export const UrlData = ({ data }) => {
           </GroupCol>
         </GroupCol>
 
-        <GroupCol mb="2rem" items="center">
+        <GroupCol mb="3rem" items="center">
           <h2 className="visitor-title">No Repeat Clicks</h2>
           <p className="visitor-count">{data.nonDupClicks}</p>
         </GroupCol>
 
-        <GroupCol justify="space-between" mb="2rem">
+        <GroupCol justify="space-between" mb="3rem">
           <Group items="center" justify="center" mb="1rem">
             <h2 className="url-title">SHORT URL</h2>
             <RiFileDownloadLine className="copy-icon" onClick={copyUrl} />
@@ -252,13 +213,15 @@ export const UrlData = ({ data }) => {
           </Group>
         </GroupCol>
 
-        <GroupCol mb="2rem" items="center" className="detail-section">
-          <Group mb="1rem">
-            <h2 className="url-title">Original URL</h2>
-            <RiFileDownloadLine className="copy-icon" />
-          </Group>
-          <p className="url">{data.originUrl}</p>
-        </GroupCol>
+        <div className="detail-section">
+          <GroupCol mb="3rem" items="center">
+            <Group mb="1rem">
+              <h2 className="url-title">Original URL</h2>
+              <RiFileDownloadLine className="copy-icon" />
+            </Group>
+            <p className="url">{data.originUrl}</p>
+          </GroupCol>
+        </div>
 
         <BsChevronDoubleDown className="detail-icon" onClick={toggleDetail} />
       </Card>

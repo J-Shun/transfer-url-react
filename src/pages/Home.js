@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useFetch } from "../api/api";
 import { url, checkTokenRoute } from "../api/routes";
 import "../assets/icon.css";
-import { JellyTriangle } from "@uiball/loaders";
+import { PageLoading } from "../components/Loading";
 import { Navigate } from "react-router-dom";
 
 const Form = styled.div`
@@ -38,53 +38,43 @@ export const Home = () => {
     return <Navigate to="/user" />;
   }
 
-  if (isLoading) {
-    return (
-      <div className="icon-background">
-        <JellyTriangle size={60} speed={1.75} color="#fcee0a" />;
-      </div>
-    );
-  } else {
-    return (
-      <Form>
-        <HomeTitle>URL Transfer</HomeTitle>
+  if (isLoading) return <PageLoading />;
 
-        <Group justify="center" mb="2.5rem">
-          <SelectButton
-            width="45%"
-            full={loginForm.login}
-            onClick={(e) => {
-              e.preventDefault();
-              setCategory("login");
-              setLoginForm({ login: true, register: false });
-            }}
-          >
-            LOGIN
-          </SelectButton>
-          <SelectButton
-            width="45%"
-            full={loginForm.register}
-            onClick={(e) => {
-              e.preventDefault();
-              setCategory("register");
-              setLoginForm({ login: false, register: true });
-            }}
-          >
-            REGISTER
-          </SelectButton>
-        </Group>
+  return (
+    <Form>
+      <HomeTitle>URL Transfer</HomeTitle>
+      <Group justify="center" mb="2.5rem">
+        <SelectButton
+          width="45%"
+          full={loginForm.login}
+          onClick={(e) => {
+            e.preventDefault();
+            setCategory("login");
+            setLoginForm({ login: true, register: false });
+          }}
+        >
+          LOGIN
+        </SelectButton>
+        <SelectButton
+          width="45%"
+          full={loginForm.register}
+          onClick={(e) => {
+            e.preventDefault();
+            setCategory("register");
+            setLoginForm({ login: false, register: true });
+          }}
+        >
+          REGISTER
+        </SelectButton>
+      </Group>
 
-        {category === "login" ? (
-          <Login setCategory={setCategory} setLoginForm={setLoginForm} />
-        ) : category === "register" ? (
-          <Register />
-        ) : (
-          <ForgetPassword
-            setCategory={setCategory}
-            setLoginForm={setLoginForm}
-          />
-        )}
-      </Form>
-    );
-  }
+      {category === "login" ? (
+        <Login setCategory={setCategory} setLoginForm={setLoginForm} />
+      ) : category === "register" ? (
+        <Register />
+      ) : (
+        <ForgetPassword setCategory={setCategory} setLoginForm={setLoginForm} />
+      )}
+    </Form>
+  );
 };

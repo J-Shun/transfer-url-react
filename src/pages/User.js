@@ -13,10 +13,8 @@ import { Navigate } from "react-router-dom";
 import { Select, Option } from "../shared/Input";
 
 export const User = () => {
-  const [showForm, setShowForm] = useState(false);
-
   const { dataListUrl, renderTrigger } = useContext(Context);
-
+  const [showForm, setShowForm] = useState(false);
   const { data, isLoading } = useFetch(dataListUrl, renderTrigger);
 
   const shortLinkList = data?.pages?.results;

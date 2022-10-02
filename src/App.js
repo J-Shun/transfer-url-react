@@ -34,8 +34,8 @@ function App() {
     status: "error",
     message: "",
   });
-
   const [renderTrigger, setRenderTrigger] = useState(true);
+  const [callApi, setCallApi] = useState(false);
 
   const [dataListUrl, setDataListUrl] = useState(
     `${url + shortLinkRoute}?page=1`
@@ -50,6 +50,8 @@ function App() {
         setRenderTrigger,
         dataListUrl,
         setDataListUrl,
+        callApi,
+        setCallApi,
       }}
     >
       <main className="global-background">

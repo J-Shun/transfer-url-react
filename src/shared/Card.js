@@ -30,4 +30,38 @@ export const Card = styled.div`
       transform: translateY(0%);
     }
   }
+
+  .card-corner {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+  }
+
+  .card-left-top {
+    top: -5px;
+    left: -5px;
+    border-top: 5px solid #fcee0a;
+    border-left: 5px solid #fcee0a;
+  }
+
+  .card-right-top {
+    top: -5px;
+    right: -5px;
+    border-top: 5px solid #fcee0a;
+    border-right: 5px solid #fcee0a;
+  }
+
+  .card-left-bottom {
+    bottom: -5px;
+    left: -5px;
+    border-bottom: 5px solid #fcee0a;
+    border-left: 5px solid #fcee0a;
+  }
+
+  .card-right-bottom {
+    bottom: -5px;
+    right: -5px;
+    border-bottom: 5px solid #fcee0a;
+    border-right: 5px solid #fcee0a;
+  }
 `;

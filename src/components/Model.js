@@ -6,8 +6,8 @@ import { Context } from "../App";
 const ModelSection = styled.div`
   width: 100vw;
   height: 100vh;
-  inset: 0;
   position: fixed;
+  inset: 0;
   z-index: ${(props) => (props.modelState.show ? "5" : "-1")};
   opacity: ${(props) => (props.modelState.show ? "1" : "0")};
   transition: 0.5s;
