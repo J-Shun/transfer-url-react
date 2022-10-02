@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/transfer-url-react/static/css/main.1a6e4974.css",
+    "main.js": "/transfer-url-react/static/js/main.8e071aaf.js",
+    "index.html": "/transfer-url-react/index.html",
+    "main.1a6e4974.css.map": "/transfer-url-react/static/css/main.1a6e4974.css.map",
+    "main.8e071aaf.js.map": "/transfer-url-react/static/js/main.8e071aaf.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1a6e4974.css",
+    "static/js/main.8e071aaf.js"
+  ]
+}
