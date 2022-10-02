@@ -9,7 +9,8 @@ import { BsFillPlusCircleFill } from "react-icons/bs";
 import { Pagination } from "../components/Pagination";
 import { Navigate } from "react-router-dom";
 import { Select, Option } from "../shared/Input";
-import { PageLoading } from "../components/Loading";
+import { Empty } from "../components/Empty";
+import { PageLoading, ApiLoading } from "../components/Loading";
 import styled from "styled-components";
 
 const UserSection = styled.div`
@@ -36,18 +37,19 @@ const UserSection = styled.div`
 `;
 
 export const User = () => {
-  const { dataListUrl, renderTrigger } = useContext(Context);
+  const { dataListUrl, renderTrigger, callApi } = useContext(Context);
   const [showForm, setShowForm] = useState(false);
   const { data, isLoading } = useFetch(dataListUrl, renderTrigger);
+  console.log(data);
 
-  const shortLinkList = data?.pages?.results;
+  const shortLinkList = data.pages?.results;
   const pageStatus = {
-    currentPage: data?.pages?.page,
-    totalPage: data?.pages?.totalPages,
+    currentPage: data.pages?.page,
+    totalPage: data.pages?.totalPages,
   };
 
   if (isLoading) return <PageLoading />;
-  if (data?.status !== "success") return <Navigate to="/" />;
+  if (data.status !== "success") return <Navigate to="/" />;
 
   return (
     <UserSection>
@@ -74,6 +76,9 @@ export const User = () => {
         <Pagination pageStatus={pageStatus} />
       </Container>
 
+      {callApi && <ApiLoading />}
+
+      {shortLinkList.length < 1 && <Empty />}
       <ShortLinkForm showForm={showForm} setShowForm={setShowForm} />
     </UserSection>
   );

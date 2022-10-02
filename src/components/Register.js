@@ -37,6 +37,13 @@ export const Register = () => {
         message: "empty name",
       });
       return false;
+    } else if (register.name.length > 12) {
+      modelDispatch({
+        type: "show",
+        status: "error",
+        message: "letter limit: 12 letters",
+      });
+      return false;
     } else if (!isFill(register.email)) {
       modelDispatch({
         type: "show",

@@ -3,7 +3,6 @@ import { url, shortLinkRoute } from "../api/routes";
 import { deleteData } from "../api/api";
 import { Context } from "../App";
 import { useContext } from "react";
-import { ApiLoading } from "./Loading";
 
 import styled from "styled-components";
 const ModelSection = styled.div`
@@ -107,13 +106,8 @@ const ModelSection = styled.div`
 `;
 
 export const Confirm = ({ checkDelete, setCheckDelete, id }) => {
-  const {
-    setDataListUrl,
-    renderTrigger,
-    setRenderTrigger,
-    callApi,
-    setCallApi,
-  } = useContext(Context);
+  const { setDataListUrl, renderTrigger, setRenderTrigger, setCallApi } =
+    useContext(Context);
 
   const DeleteShortLink = async () => {
     setCallApi(true);
@@ -145,8 +139,6 @@ export const Confirm = ({ checkDelete, setCheckDelete, id }) => {
           </div>
         </div>
       </ModelSection>
-
-      {callApi && <ApiLoading />}
     </>
   );
 };
