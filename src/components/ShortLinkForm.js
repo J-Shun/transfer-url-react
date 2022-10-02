@@ -7,7 +7,7 @@ import { Label, Input, Select, Option } from "../shared/Input";
 import { SubmitButton, CancelButton } from "../shared/Button";
 import { Group, GroupCol } from "../shared/Group";
 import { Container } from "../shared/Container";
-import { CardTitle, CardSubTitle } from "../shared/Text";
+import { CardTitle } from "../shared/Text";
 import { Card } from "../shared/Card";
 import { MdContentPaste } from "react-icons/md";
 import { TiDeleteOutline } from "react-icons/ti";
@@ -30,6 +30,12 @@ const ShortLinkSection = styled.div`
   transition: transform 0.5s;
   transform: ${(props) =>
     props.showForm ? "translateX(0)" : "translateX(-100%)"};
+
+  .subtitle {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
 
   .paste-btn {
     position: absolute;
@@ -240,7 +246,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
           <Card maxWidth="500px" mt="4rem" py="2rem">
             <CardTitle mb="2rem">CREATE NEW URL</CardTitle>
             <GroupCol mb="2rem">
-              <CardSubTitle>REQUIRED</CardSubTitle>
+              <h3 className="subtitle">REQUIRED</h3>
               <Group items="center">
                 <Input
                   type="text"
@@ -256,7 +262,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
             </GroupCol>
 
             <GroupCol mb="2rem">
-              <CardSubTitle>OPTIONAL</CardSubTitle>
+              <h3 className="subtitle">OPTIONAL</h3>
               <Input
                 type="text"
                 placeholder="Tag: tag1 tag2"
@@ -269,7 +275,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
 
             <GroupCol mb="2rem">
               <Group justify="space-between" items="center">
-                <CardSubTitle>OG : CUSTOMIZE</CardSubTitle>
+                <h3 className="subtitle">OG : CUSTOMIZE</h3>
                 <BsChevronDoubleDown
                   className="arrow-btn"
                   onClick={() => {
@@ -278,9 +284,9 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
                 />
               </Group>
               <GroupCol className="customize-section">
-                <GroupCol mb="1rem">
+                <GroupCol mb="1.5rem">
                   <Select name="type" onChange={handleForm}>
-                    <Option value="">Website (default)</Option>
+                    <Option value="">Website (Default)</Option>
                     <Option value="article">Article</Option>
                     <Option value="book">Book</Option>
                     <Option value="profile">Profile</Option>
@@ -291,7 +297,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
                 <Input
                   type="text"
                   placeholder="Title (REQUIRE)"
-                  mb="1rem"
+                  mb="1.5rem"
                   name="title"
                   value={formData.title}
                   onChange={handleForm}
@@ -299,7 +305,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
                 <Input
                   type="text"
                   placeholder="Description (REQUIRE)"
-                  mb="1rem"
+                  mb="1.5rem"
                   name="description"
                   value={formData.description}
                   onChange={handleForm}
@@ -307,7 +313,7 @@ export const ShortLinkForm = ({ showForm, setShowForm }) => {
                 <Input
                   type="text"
                   placeholder="Main URL"
-                  mb="1rem"
+                  mb="1.5rem"
                   name="url"
                   value={formData.url}
                   onChange={handleForm}

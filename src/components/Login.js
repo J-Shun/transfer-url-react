@@ -1,15 +1,15 @@
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { url, loginRoute } from "../api/routes";
+import { sendData } from "../api/api";
 import { GroupCol } from "../shared/Group";
 import { Input } from "../shared/Input";
 import { Warn, Help } from "../shared/Text";
 import { SubmitButton } from "../shared/Button";
-import { useState, useContext } from "react";
-import { sendData } from "../api/api";
 import { Model } from "./Model";
 import { Context } from "../App";
-import { url, loginRoute } from "../api/routes";
-import { isFill, isValidEmail } from "../utilities/checkForm";
-import { useNavigate } from "react-router-dom";
 import { ApiLoading } from "../components/Loading";
+import { isFill, isValidEmail } from "../utilities/checkForm";
 import { saveToken } from "../utilities/saveToken";
 
 export const Login = ({ setCategory, setLoginForm }) => {
@@ -73,7 +73,7 @@ export const Login = ({ setCategory, setLoginForm }) => {
 
   return (
     <>
-      <GroupCol mb="1rem">
+      <GroupCol mb="2rem">
         <Input
           type="text"
           placeholder="EMAIL"
@@ -82,7 +82,7 @@ export const Login = ({ setCategory, setLoginForm }) => {
           value={login.email}
           onChange={handleLogin}
         />
-        <Warn email={login.email}>Please enter a valid email </Warn>
+        <Warn>Please enter a valid email </Warn>
       </GroupCol>
       <GroupCol mb="3rem">
         <Input
@@ -93,9 +93,9 @@ export const Login = ({ setCategory, setLoginForm }) => {
           value={login.password}
           onChange={handleLogin}
         />
-        <Warn password={login.password}>Please enter password </Warn>
+        <Warn>Please enter password </Warn>
       </GroupCol>
-      <SubmitButton mb="2.5rem" onClick={submitLogin}>
+      <SubmitButton mb="3rem" onClick={submitLogin}>
         SUBMIT
       </SubmitButton>
       <Help

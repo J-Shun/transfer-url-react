@@ -119,7 +119,7 @@ export const ForgetPassword = ({ setCategory, setLoginForm }) => {
 
   return (
     <>
-      <GroupCol mb="1rem">
+      <GroupCol mb="2rem">
         <Input
           type="text"
           placeholder="EMAIL"
@@ -130,14 +130,14 @@ export const ForgetPassword = ({ setCategory, setLoginForm }) => {
         />
         <Warn>Please enter a valid email </Warn>
       </GroupCol>
-      <GroupCol mb="1rem">
+      <GroupCol mb="2rem">
         <Select name="safetyQuestion" mb="1rem" onChange={handleResetData}>
           <Option value="">Select Safety Question</Option>
           <Option value="Q1_FIRST_PET_NAME">Q : Name of First Pet ?</Option>
           <Option value="Q2_PARENTS_CITY">Q : Parents' Living City ?</Option>
         </Select>
       </GroupCol>
-      <GroupCol mb="1rem">
+      <GroupCol mb="2rem">
         <Input
           type="text"
           placeholder="Safety Answer"
@@ -148,7 +148,7 @@ export const ForgetPassword = ({ setCategory, setLoginForm }) => {
         />
         <Warn>Please Answer Safety Question</Warn>
       </GroupCol>
-      <GroupCol mb="1rem">
+      <GroupCol mb="2rem">
         <Input
           type="password"
           placeholder="PASSWORD"

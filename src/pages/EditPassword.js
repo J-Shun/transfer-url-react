@@ -84,9 +84,9 @@ export const EditPassword = () => {
         <Card mt="8rem" maxWidth="500px">
           <Corner />
 
-          <CardTitle mb="2rem">Edit Password</CardTitle>
+          <CardTitle mb="2.5rem">Edit Password</CardTitle>
           <Input
-            mb="1.5rem"
+            mb="4rem"
             type="password"
             name="password"
             value={password.password}
@@ -94,7 +94,7 @@ export const EditPassword = () => {
             onChange={handlePassword}
           />
           <Input
-            mb="2rem"
+            mb="4rem"
             type="password"
             name="confirmPassword"
             value={password.confirmPassword}

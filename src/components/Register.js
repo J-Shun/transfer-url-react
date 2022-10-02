@@ -112,7 +112,7 @@ export const Register = () => {
 
   return (
     <>
-      <GroupCol mb="1rem">
+      <GroupCol mb="2rem">
         <Input
           type="text"
           placeholder="NAME"
@@ -123,7 +123,7 @@ export const Register = () => {
         />
         <Warn>Please enter your name </Warn>
       </GroupCol>
-      <GroupCol mb="1rem">
+      <GroupCol mb="2rem">
         <Input
           type="text"
           placeholder="EMAIL"
@@ -134,7 +134,7 @@ export const Register = () => {
         />
         <Warn>Need lowercase, uppercase, special character</Warn>
       </GroupCol>
-      <GroupCol mb="1rem">
+      <GroupCol mb="2rem">
         <Input
           type="password"
           placeholder="PASSWORD"
@@ -145,7 +145,7 @@ export const Register = () => {
         />
         <Warn>Please enter password </Warn>
       </GroupCol>
-      <GroupCol mb="1rem">
+      <GroupCol mb="2rem">
         <Input
           type="password"
           placeholder="PASSWORD"
@@ -156,7 +156,7 @@ export const Register = () => {
         />
         <Warn>Confirm password incorrect</Warn>
       </GroupCol>
-      <GroupCol mb="1rem">
+      <GroupCol mb="2rem">
         <Select name="safetyQuestion" mb="1rem" onChange={handleRegister}>
           <Option value="">Select Safety Question</Option>
           <Option value="Q1_FIRST_PET_NAME">Q : Name of First Pet ?</Option>

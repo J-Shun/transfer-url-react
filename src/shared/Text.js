@@ -27,16 +27,6 @@ export const CardTitle = styled.h2`
   transform: ${(props) => props.translateY};
 `;
 
-export const CardSubTitle = styled.h3`
-  color: #fff;
-  font-size: 1.5rem;
-`;
-
-export const CardText = styled.p`
-  color: #fff;
-  font-size: 1.5rem;
-`;
-
 export const Warn = styled.span`
   color: #e23832;
 `;

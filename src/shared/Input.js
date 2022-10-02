@@ -37,7 +37,7 @@ export const TextArea = styled.textarea`
 
 export const Label = styled.label`
   width: 100%;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   padding: 0.5rem 1rem;
   color: #fff;
   background-color: transparent;
@@ -55,7 +55,7 @@ export const Label = styled.label`
 export const Select = styled.select`
   width: ${(props) => props.width || "100%"};
   font-size: 1.25rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.75rem;
   color: #fff;
   background-color: transparent;
   border: none;

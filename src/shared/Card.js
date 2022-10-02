@@ -5,7 +5,10 @@ export const Card = styled.div`
   max-width: ${(props) => props.maxWidth};
   color: #fff;
   background-image: linear-gradient(#111111, #1a1a1a);
-  padding: ${(props) => props.py || "1.5rem"} ${(props) => props.px || "2rem"};
+  padding-left: ${(props) => props.py || "2.25rem"};
+  padding-right: ${(props) => props.py || "2.25rem"};
+  padding-top: ${(props) => props.px || "2.25rem"};
+  padding-bottom: ${(props) => props.px || "2.25rem"};
   transition: ease-in-out 0.3s;
   margin-top: ${(props) => props.mt};
   margin-left: auto;

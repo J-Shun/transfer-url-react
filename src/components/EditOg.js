@@ -204,7 +204,7 @@ export const EditOg = ({ showOgForm, setShowOgForm, og, id }) => {
                 <Input
                   type="text"
                   placeholder="Title (REQUIRE)"
-                  mb="1rem"
+                  mb="1.5rem"
                   name="title"
                   value={formData.title}
                   onChange={handleForm}
@@ -212,7 +212,7 @@ export const EditOg = ({ showOgForm, setShowOgForm, og, id }) => {
                 <Input
                   type="text"
                   placeholder="Description (REQUIRE)"
-                  mb="1rem"
+                  mb="1.5rem"
                   name="description"
                   value={formData.description}
                   onChange={handleForm}
@@ -220,7 +220,7 @@ export const EditOg = ({ showOgForm, setShowOgForm, og, id }) => {
                 <Input
                   type="text"
                   placeholder="Main URL"
-                  mb="1rem"
+                  mb="1.5rem"
                   name="url"
                   value={formData.url}
                   onChange={handleForm}

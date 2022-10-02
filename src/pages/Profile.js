@@ -6,13 +6,22 @@ import { url, updateFileRoute, checkTokenRoute } from "../api/routes";
 import { Container } from "../shared/Container";
 import { Group, GroupCol } from "../shared/Group";
 import { Card } from "../shared/Card";
-import { CardTitle, CardSubTitle } from "../shared/Text";
+import { CardTitle } from "../shared/Text";
 import { SubmitButton } from "../shared/Button";
 import { Input } from "../shared/Input";
 import { Corner } from "../shared/Corner";
 import { Model } from "../components/Model";
 import { PageLoading, ApiLoading } from "../components/Loading";
 import { isFill } from "../utilities/checkForm";
+import styled from "styled-components";
+
+const ProfileSection = styled.div`
+  .subtitle {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+`;
 
 export const Profile = () => {
   const { modelDispatch, callApi, setCallApi } = useContext(Context);
@@ -60,39 +69,36 @@ export const Profile = () => {
     }
   };
 
-  if (isLoading) {
-    return <PageLoading />;
-  } else {
-    return (
-      <>
-        <Container>
-          <Card mt="8rem" maxWidth="500px">
-            <Corner />
+  if (isLoading) <PageLoading />;
+  return (
+    <ProfileSection>
+      <Container>
+        <Card mt="8rem" maxWidth="500px">
+          <Corner />
 
-            <CardTitle mb="2rem">Profile</CardTitle>
-            <GroupCol mb="2rem">
-              <CardSubTitle>EMAIL</CardSubTitle>
-              <Input value={localStorage.email} disabled></Input>
-            </GroupCol>
-            <GroupCol mb="2rem">
-              <CardSubTitle>NAME</CardSubTitle>
-              <Input
-                type="text"
-                name="name"
-                value={profile.name}
-                onChange={handleProfile}
-              />
-            </GroupCol>
-            <Group justify="center" mb="2rem">
-              <SubmitButton onClick={submit}>SAVE</SubmitButton>
-            </Group>
-          </Card>
-        </Container>
+          <CardTitle mb="2.5rem">Profile</CardTitle>
+          <GroupCol mb="2rem">
+            <h3 className="subtitle">EMAIL</h3>
+            <Input value={localStorage.email} disabled></Input>
+          </GroupCol>
+          <GroupCol mb="4rem">
+            <h3 className="subtitle">NAME</h3>
+            <Input
+              type="text"
+              name="name"
+              value={profile.name}
+              onChange={handleProfile}
+            />
+          </GroupCol>
+          <Group justify="center" mb="2rem">
+            <SubmitButton onClick={submit}>SAVE</SubmitButton>
+          </Group>
+        </Card>
+      </Container>
 
-        {callApi && <ApiLoading />}
+      {callApi && <ApiLoading />}
 
-        <Model />
-      </>
-    );
-  }
+      <Model />
+    </ProfileSection>
+  );
 };
