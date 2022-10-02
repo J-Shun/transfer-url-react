@@ -10,21 +10,18 @@ import { url, editPasswordRoute, checkTokenRoute } from "../api/routes";
 import { Model } from "../components/Model";
 import { Context } from "../App";
 import { isFill, isValidPassword } from "../utilities/checkForm";
-import { JellyTriangle } from "@uiball/loaders";
 import { Navigate } from "react-router-dom";
+import { PageLoading, ApiLoading } from "../components/Loading";
 
 export const EditPassword = () => {
-  const { modelDispatch } = useContext(Context);
+  const { modelDispatch, callApi, setCallApi } = useContext(Context);
   const [password, setPassword] = useState({
     password: "",
     confirmPassword: "",
   });
 
   const { data, isLoading } = useFetch(url + checkTokenRoute);
-  console.log(data);
-  if (data.message === "jwt malformed") {
-    return <Navigate to="/" />;
-  }
+  if (data.message === "jwt malformed") return <Navigate to="/" />;
 
   const handlePassword = (e) => {
     const { name, value } = e.target;
@@ -43,7 +40,7 @@ export const EditPassword = () => {
       modelDispatch({
         type: "show",
         status: "error",
-        message: "invalid password",
+        message: "invalid password form",
       });
       return false;
     } else if (password.password !== password.confirmPassword) {
@@ -59,7 +56,10 @@ export const EditPassword = () => {
 
   const submitNewPassword = async () => {
     if (!isFormPass()) return;
+    setCallApi(true);
     const result = await sendData("patch", url + editPasswordRoute, password);
+    setCallApi(false);
+
     if (result.status === "success") {
       modelDispatch({
         type: "show",
@@ -71,53 +71,48 @@ export const EditPassword = () => {
       modelDispatch({
         type: "show",
         status: "error",
-        message: "database no response",
+        message: "server error",
       });
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="icon-background">
-        <JellyTriangle size={60} speed={1.75} color="#fcee0a" />;
-      </div>
-    );
-  } else {
-    return (
-      <>
-        <Container>
-          <Card mt="8rem" maxWidth="500px">
-            <div className="card-corner card-left-top"></div>
-            <div className="card-corner card-right-top"></div>
-            <div className="card-corner card-left-bottom"></div>
-            <div className="card-corner card-right-bottom"></div>
-            <CardTitle mb="2rem">Edit Password</CardTitle>
-            <Input
-              mb="1.5rem"
-              type="password"
-              name="password"
-              value={password.password}
-              placeholder="Enter New Password"
-              onChange={handlePassword}
-            />
-            <Input
-              mb="2rem"
-              type="password"
-              name="confirmPassword"
-              value={password.confirmPassword}
-              placeholder="Confirm New Password"
-              onChange={handlePassword}
-            />
-            <Group justify="center">
-              <SubmitButton mb="2rem" onClick={submitNewPassword}>
-                Save
-              </SubmitButton>
-            </Group>
-          </Card>
-        </Container>
+  if (isLoading) return <PageLoading />;
+  return (
+    <>
+      <Container>
+        <Card mt="8rem" maxWidth="500px">
+          <div className="card-corner card-left-top"></div>
+          <div className="card-corner card-right-top"></div>
+          <div className="card-corner card-left-bottom"></div>
+          <div className="card-corner card-right-bottom"></div>
+          <CardTitle mb="2rem">Edit Password</CardTitle>
+          <Input
+            mb="1.5rem"
+            type="password"
+            name="password"
+            value={password.password}
+            placeholder="Enter New Password"
+            onChange={handlePassword}
+          />
+          <Input
+            mb="2rem"
+            type="password"
+            name="confirmPassword"
+            value={password.confirmPassword}
+            placeholder="Confirm New Password"
+            onChange={handlePassword}
+          />
+          <Group justify="center">
+            <SubmitButton mb="2rem" onClick={submitNewPassword}>
+              Save
+            </SubmitButton>
+          </Group>
+        </Card>
+      </Container>
 
-        <Model />
-      </>
-    );
-  }
+      {callApi && <ApiLoading />}
+
+      <Model />
+    </>
+  );
 };
